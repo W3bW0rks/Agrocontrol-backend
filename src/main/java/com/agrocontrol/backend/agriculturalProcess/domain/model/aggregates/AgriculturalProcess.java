@@ -1,6 +1,9 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates;
 
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.CreateAgriculturalProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivityManager;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Embedded;
@@ -41,5 +44,13 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
     public void finish() {
         this.endDate = LocalDate.now();
         this.isFinished = true;
+    }
+
+    public void addActivity(AddSeedingToProcessCommand command) {
+        activityManager.addActivity(this.getId(), ActivityType.SEEDING, command);
+    }
+
+    public void addSeedingToProcess(AddIrrigationToProcessCommand command) {
+        activityManager.addActivity(this.getId(), ActivityType.IRRIGATION, command);
     }
 }
