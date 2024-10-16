@@ -3,6 +3,8 @@ package com.agrocontrol.backend.agriculturalProcess.interfaces.rest;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessQueryService;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.AgriculturalProcessResource;
@@ -30,9 +32,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Tag(name = "Agricultural Processes", description = "Operations related to agricultural processes")
 public class AgriculturalProcessesController {
     private final AgriculturalProcessCommandService commandService;
+    private final AgriculturalProcessQueryService queryService;
 
-    public AgriculturalProcessesController(AgriculturalProcessCommandService commandService) {
+    public AgriculturalProcessesController(AgriculturalProcessCommandService commandService, AgriculturalProcessQueryService queryService) {
         this.commandService = commandService;
+        this.queryService = queryService;
     }
 
     @Operation(
@@ -113,6 +117,44 @@ public class AgriculturalProcessesController {
         return agriculturalProcess.map(source ->
                         new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @Operation(
+            summary = "Get an agricultural process by its id",
+            description = "Get an agricultural process by its id"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Agricultural process found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @GetMapping("/{agriculturalProcessId}")
+    public ResponseEntity<AgriculturalProcessResource> getAgriculturalProcessById(@PathVariable Long agriculturalProcessId) {
+        var query = new GetAgriculturalProcessByIdQuery(agriculturalProcessId);
+        var agriculturalProcess = this.queryService.handle(query);
+
+        return agriculturalProcess.map(source ->
+                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                                HttpStatus.OK))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @Operation(
+            summary = "Get an agricultural process by its field id",
+            description = "Get an agricultural process by its field id"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Agricultural process found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @GetMapping("/field/{fieldId}")
+    public ResponseEntity<AgriculturalProcessResource> getAgriculturalProcessByFieldId(@PathVariable Long fieldId) {
+        var query = new GetAgriculturalProcessByFieldIdQuery(fieldId);
+        var agriculturalProcess = this.queryService.handle(query);
+
+        return agriculturalProcess.map(source ->
+                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                                HttpStatus.OK))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }
