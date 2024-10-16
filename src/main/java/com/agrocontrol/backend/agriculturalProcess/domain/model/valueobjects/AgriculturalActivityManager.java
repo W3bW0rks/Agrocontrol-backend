@@ -1,5 +1,6 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 
+import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Irrigation;
@@ -14,20 +15,30 @@ import java.util.List;
 @Embeddable
 public class AgriculturalActivityManager {
 
-    @OneToMany(mappedBy = "agriculturalProcessId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "agriculturalProcess", cascade = CascadeType.ALL)
     private List<AgriculturalActivity> activities;
 
     public AgriculturalActivityManager() {
         this.activities = new ArrayList<>();
     }
 
-    public void addActivity(Long agriculturalProcessId, ActivityType activityType, AddIrrigationToProcessCommand command) {
-        Irrigation irrigation = new Irrigation(agriculturalProcessId, activityType, command.hoursIrrigated());
+    public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddIrrigationToProcessCommand command) {
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Cannot add activity to a finished process");
+        }
+        Irrigation irrigation = new Irrigation(agriculturalProcess, activityType, command.hoursIrrigated());
         this.activities.add(irrigation);
     }
 
-    public void addActivity(Long agriculturalProcessId, ActivityType activityType, AddSeedingToProcessCommand command) {
-        Seeding seeding = new Seeding(agriculturalProcessId, activityType, command.plantType(), command.quantityPlanted());
+    public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddSeedingToProcessCommand command) {
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Cannot add activity to a finished process");
+        }
+        Seeding seeding = new Seeding(agriculturalProcess, activityType, command.plantType(), command.quantityPlanted());
         this.activities.add(seeding);
+    }
+
+    public List<AgriculturalActivity> getActivities() {
+        return activities;
     }
 }
