@@ -1,5 +1,6 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 
+import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -14,8 +15,10 @@ import java.time.LocalDate;
         discriminatorType = DiscriminatorType.STRING)
 public class AgriculturalActivity extends AuditableAbstractAggregateRoot<AgriculturalActivity> {
 
+    @ManyToOne
+    @JoinColumn(name = "agricultural_process_id", nullable = false)
     @NotNull
-    private Long agriculturalProcessId;
+    private AgriculturalProcess agriculturalProcess;
 
     @NotNull
     private ActivityType activityType;
@@ -27,8 +30,8 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
 
     protected AgriculturalActivity() {}
 
-    public AgriculturalActivity(Long agriculturalProcessId, ActivityType activityType) {
-        this.agriculturalProcessId = agriculturalProcessId;
+    public AgriculturalActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType) {
+        this.agriculturalProcess = agriculturalProcess;
         this.activityType = activityType;
         this.date = LocalDate.now();
     }
