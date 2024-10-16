@@ -7,6 +7,7 @@ import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalP
 import com.agrocontrol.backend.agriculturalProcess.infrastructure.persistence.jpa.repositories.AgriculturalProcessRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,7 @@ public class AgriculturalProcessQueryServiceImpl implements AgriculturalProcessQ
     }
 
     @Override
-    public Optional<AgriculturalProcess> handle(GetAgriculturalProcessByFieldIdQuery query) {
+    public List<AgriculturalProcess> handle(GetAgriculturalProcessByFieldIdQuery query) {
         return this.agriculturalProcessRepository.findByFieldId(query.fieldId());
     }
 }

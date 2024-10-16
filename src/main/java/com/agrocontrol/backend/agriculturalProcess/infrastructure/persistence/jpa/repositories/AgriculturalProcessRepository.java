@@ -4,9 +4,9 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.Agric
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface AgriculturalProcessRepository extends JpaRepository<AgriculturalProcess, Long> {
-    Optional<AgriculturalProcess> findByFieldId(Long fieldId);
+    List<AgriculturalProcess> findByFieldId(Long fieldId);
 }
