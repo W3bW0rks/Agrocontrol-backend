@@ -4,6 +4,7 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrri
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.CreateAgriculturalProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivityManager;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Embedded;
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class AgriculturalProcess extends AuditableAbstractAggregateRoot<AgriculturalProcess> {
@@ -39,6 +41,7 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
         this.startDate = LocalDate.now();
         this.endDate = null;
         this.isFinished = false;
+        this.activityManager = new AgriculturalActivityManager();
     }
 
     public void finish() {
@@ -47,10 +50,14 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
     }
 
     public void addActivity(AddSeedingToProcessCommand command) {
-        activityManager.addActivity(this.getId(), ActivityType.SEEDING, command);
+        activityManager.addActivity(this, ActivityType.SEEDING, command);
     }
 
-    public void addSeedingToProcess(AddIrrigationToProcessCommand command) {
-        activityManager.addActivity(this.getId(), ActivityType.IRRIGATION, command);
+    public void addActivity(AddIrrigationToProcessCommand command) {
+        activityManager.addActivity(this, ActivityType.IRRIGATION, command);
+    }
+
+    public List<AgriculturalActivity> getActivities() {
+        return activityManager.getActivities();
     }
 }
