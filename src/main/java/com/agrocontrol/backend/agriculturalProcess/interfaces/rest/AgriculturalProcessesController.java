@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -148,13 +149,14 @@ public class AgriculturalProcessesController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
     })
     @GetMapping("/field/{fieldId}")
-    public ResponseEntity<AgriculturalProcessResource> getAgriculturalProcessByFieldId(@PathVariable Long fieldId) {
+    public ResponseEntity<List<AgriculturalProcessResource>> getAgriculturalProcessByFieldId(@PathVariable Long fieldId) {
         var query = new GetAgriculturalProcessByFieldIdQuery(fieldId);
-        var agriculturalProcess = this.queryService.handle(query);
+        List<AgriculturalProcess> agriculturalProcesses = this.queryService.handle(query);
 
-        return agriculturalProcess.map(source ->
-                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
-                                HttpStatus.OK))
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+        if (agriculturalProcesses.isEmpty()) return ResponseEntity.badRequest().build();
+
+        List<AgriculturalProcessResource> resources = agriculturalProcesses.stream().map(AgriculturalProcessResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(resources);
+
     }
 }
