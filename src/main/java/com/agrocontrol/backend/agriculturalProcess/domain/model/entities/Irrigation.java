@@ -1,5 +1,6 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.entities;
 
+import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import jakarta.persistence.DiscriminatorValue;
@@ -15,8 +16,8 @@ public class Irrigation extends AgriculturalActivity {
 
     protected Irrigation() {}
 
-    public Irrigation(Long agriculturalProcessId, ActivityType activityType, Integer hoursIrrigated) {
-        super(agriculturalProcessId, activityType);
+    public Irrigation(AgriculturalProcess agriculturalProcess, ActivityType activityType, Integer hoursIrrigated) {
+        super(agriculturalProcess, activityType);
         this.hoursIrrigated = hoursIrrigated;
     }
 }
