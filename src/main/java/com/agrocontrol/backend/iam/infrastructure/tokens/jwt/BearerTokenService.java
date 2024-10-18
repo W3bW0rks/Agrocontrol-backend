@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 /**
  * This interface is a marker interface for the JWT token service.
  * It extends the {@link TokenService} interface.
- * This interface is used to inject the JWT token service in the {@link com.acme.learning.platform.iam.infrastructure.tokens.jwt.services.TokenServiceImpl} class.
+ * This interface is used to inject the JWT token service in the {@link com.agrocontrol.backend.iam.infrastructure.tokens.jwt.services.TokenServiceImpl} class.
  */
 public interface BearerTokenService extends TokenService {
 

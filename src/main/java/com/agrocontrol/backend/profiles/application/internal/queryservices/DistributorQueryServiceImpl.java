@@ -1,10 +1,10 @@
 package com.agrocontrol.backend.profiles.application.internal.queryservices;
 
-import com.example.demo.backend.profiles.application.internal.outboundservices.acl.ExternalUserService;
-import com.example.demo.backend.profiles.domain.model.aggregates.Distributor;
-import com.example.demo.backend.profiles.domain.model.queries.GetDistributorByUserIdAsyncQuery;
-import com.example.demo.backend.profiles.domain.services.DistributorQueryService;
-import com.example.demo.backend.profiles.infrastructure.persistence.jpa.repositories.DistributorRepository;
+import com.agrocontrol.backend.profiles.application.internal.outboundservices.acl.ExternalUserService;
+import com.agrocontrol.backend.profiles.domain.model.aggregates.Distributor;
+import com.agrocontrol.backend.profiles.domain.model.queries.GetDistributorByUserIdAsyncQuery;
+import com.agrocontrol.backend.profiles.domain.services.DistributorQueryService;
+import com.agrocontrol.backend.profiles.infrastructure.persistence.jpa.repositories.DistributorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

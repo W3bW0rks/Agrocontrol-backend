@@ -1,7 +1,8 @@
 package com.agrocontrol.backend.iam.infrastructure.tokens.jwt.services;
 
 
-import com.example.demo.backend.iam.infrastructure.tokens.jwt.BearerTokenService;
+
+import com.agrocontrol.backend.iam.infrastructure.tokens.jwt.BearerTokenService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;

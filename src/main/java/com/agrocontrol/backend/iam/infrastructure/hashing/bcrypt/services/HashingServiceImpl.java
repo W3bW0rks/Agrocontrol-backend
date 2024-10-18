@@ -1,7 +1,8 @@
 package com.agrocontrol.backend.iam.infrastructure.hashing.bcrypt.services;
 
 
-import com.example.demo.backend.iam.infrastructure.hashing.bcrypt.BCryptHashingService;
+
+import com.agrocontrol.backend.iam.infrastructure.hashing.bcrypt.BCryptHashingService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
