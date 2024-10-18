@@ -5,6 +5,8 @@ package com.agrocontrol.backend.profiles.domain.model.aggregates;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +29,8 @@ public class AgriculturalProducer extends AuditableAbstractAggregateRoot<Agricul
     @NotBlank
     private String dni;
 
-    @NotBlank
+    @NotNull(message = "UserId cannot be null")
+    @Positive(message = "UserId must be positive")
     private Long userId;
 
     public AgriculturalProducer(String fullName, String city, String country, String phone, String dni, Long userId) {
