@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.iam.interfaces.rest.transform;
 
 import com.agrocontrol.backend.iam.domain.model.entities.Role;
-import com.agrocontrol.backend.iam.interfaces.rest.resource.RoleResource;
+import com.agrocontrol.backend.iam.interfaces.rest.resources.RoleResource;
 
 public class RoleResourceFromEntityAssembler {
     public static RoleResource toResourceFromEntity(Role role) {

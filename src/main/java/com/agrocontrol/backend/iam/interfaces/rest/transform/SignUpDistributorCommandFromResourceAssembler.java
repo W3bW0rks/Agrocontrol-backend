@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.iam.interfaces.rest.transform;
 
 import com.agrocontrol.backend.iam.domain.model.commands.SignUpDistributorCommand;
-import com.agrocontrol.backend.iam.interfaces.rest.resource.SignUpDistributorResource;
+import com.agrocontrol.backend.iam.interfaces.rest.resources.SignUpDistributorResource;
 
 public class SignUpDistributorCommandFromResourceAssembler {
     public static SignUpDistributorCommand toCommandFromResource(SignUpDistributorResource resource) {

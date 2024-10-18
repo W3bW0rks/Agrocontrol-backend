@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.iam.interfaces.rest.resource;
+package com.agrocontrol.backend.iam.interfaces.rest.resources;
 
 public record SignInResource(String username, String password) {
 }

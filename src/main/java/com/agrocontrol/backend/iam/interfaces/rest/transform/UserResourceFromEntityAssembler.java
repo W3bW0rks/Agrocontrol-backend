@@ -2,7 +2,7 @@ package com.agrocontrol.backend.iam.interfaces.rest.transform;
 
 import com.agrocontrol.backend.iam.domain.model.aggregates.User;
 import com.agrocontrol.backend.iam.domain.model.entities.Role;
-import com.agrocontrol.backend.iam.interfaces.rest.resource.UserResource;
+import com.agrocontrol.backend.iam.interfaces.rest.resources.UserResource;
 
 public class UserResourceFromEntityAssembler {
     public static UserResource toResourceFromEntity(User user) {
