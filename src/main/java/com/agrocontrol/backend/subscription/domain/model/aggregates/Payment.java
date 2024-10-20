@@ -6,6 +6,7 @@ import com.agrocontrol.backend.subscription.domain.model.commands.CreatePaymentC
 import com.agrocontrol.backend.subscription.domain.model.commands.RenewPaymentCommand;
 import com.agrocontrol.backend.subscription.domain.model.commands.UpdatePlanTypeCommand;
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.PlanTypes;
+import com.agrocontrol.backend.subscription.domain.model.valueobjects.SubscriptionId;
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.UserId;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -23,6 +24,9 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
     @Embedded
     private UserId userId;
 
+    @Embedded
+    private SubscriptionId subscriptionId;
+
     private LocalDate startDate;
 
     private LocalDate renewalDate;
@@ -35,7 +39,8 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
 
     public Payment(CreatePaymentCommand command) {
         this.planType = command.planType();
-        this.userId = command.userId();
+        this.userId = new UserId(command.userId());
+        this.subscriptionId = new SubscriptionId(command.subscriptionId());
         this.startDate = command.startDate();
         this.renewalDate = command.renewalDate();
         this.status = command.status();

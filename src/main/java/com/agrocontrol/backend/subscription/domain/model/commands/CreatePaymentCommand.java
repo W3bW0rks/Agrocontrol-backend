@@ -7,7 +7,8 @@ import java.time.LocalDate;
 
 public record CreatePaymentCommand(
         PlanTypes planType,
-        UserId userId,
+        Long userId,
+        Long subscriptionId,
         LocalDate startDate,
         LocalDate renewalDate,
         String status,
