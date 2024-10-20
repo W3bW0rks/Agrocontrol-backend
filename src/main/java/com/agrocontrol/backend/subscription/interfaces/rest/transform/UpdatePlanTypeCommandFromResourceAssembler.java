@@ -4,10 +4,10 @@ import com.agrocontrol.backend.subscription.domain.model.commands.UpdatePlanType
 import com.agrocontrol.backend.subscription.interfaces.rest.resources.UpdatePlantTypeResource;
 
 public class UpdatePlanTypeCommandFromResourceAssembler {
-    public UpdatePlanTypeCommand toCommandFromResource(UpdatePlantTypeResource resource) {
+    public static UpdatePlanTypeCommand toCommandFromResource(UpdatePlantTypeResource resource, Long id) {
         return new UpdatePlanTypeCommand(
             resource.planType(),
-            resource.paymentId()
+            id
         );
     }
 }

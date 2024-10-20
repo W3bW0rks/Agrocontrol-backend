@@ -4,10 +4,10 @@ import com.agrocontrol.backend.subscription.domain.model.commands.RenewPaymentCo
 import com.agrocontrol.backend.subscription.interfaces.rest.resources.RenewPaymentResource;
 
 public class RenewPaymentCommandFromResourceAssembler {
-    public static RenewPaymentCommand toCommandFromResource(RenewPaymentResource resource) {
+    public static RenewPaymentCommand toCommandFromResource(RenewPaymentResource resource, Long id) {
         return new RenewPaymentCommand(
             resource.renewalDate(),
-            resource.paymentId()
+            id
         );
     }
 }
