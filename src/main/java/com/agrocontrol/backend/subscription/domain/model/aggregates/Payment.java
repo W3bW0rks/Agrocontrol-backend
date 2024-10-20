@@ -54,4 +54,12 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
     public void renewPlan(RenewPaymentCommand command) {
         this.renewalDate = command.renewalDate();
     }
+
+    public Long getUserId() {
+        return this.userId.userId();
+    }
+
+    public Long getSubscriptionId() {
+        return this.subscriptionId.subscriptionId();
+    }
 }
