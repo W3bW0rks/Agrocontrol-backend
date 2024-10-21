@@ -3,13 +3,18 @@ package com.agrocontrol.backend.agriculturalProcess.interfaces.rest;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessQueryService;
+import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.AgriculturalActivityResource;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.AgriculturalProcessResource;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.CreateAgriculturalProcessResource;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.FinishAgriculturalProcessResource;
+import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.AgriculturalActivityResourceAssembler;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.AgriculturalProcessResourceFromEntityAssembler;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.CreateAgriculturalProcessCommandFromResourceAssembler;
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.FinishAgriculturalProcessCommandFromResourceAssembler;
@@ -159,5 +164,28 @@ public class AgriculturalProcessesController {
         List<AgriculturalProcessResource> resources = agriculturalProcesses.stream().map(AgriculturalProcessResourceFromEntityAssembler::toResourceFromEntity).toList();
         return ResponseEntity.ok(resources);
 
+    }
+
+    @Operation(
+            summary = "Get activities by activity type and agricultural process id",
+            description = "Get activities by activity type and agricultural process id"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Activities found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @GetMapping("/activities")
+    public ResponseEntity<List<AgriculturalActivityResource>> getActivitiesByActivityTypeAndAgriculturalProcessId(
+            @RequestParam Long agriculturalProcessId,
+            @RequestParam String activityType) {
+        ActivityType type = ActivityType.valueOf(activityType);
+        var query = new GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery(type, agriculturalProcessId);
+        List<AgriculturalActivity> activities = this.queryService.handle(query);
+
+        if (activities.isEmpty()) return ResponseEntity.badRequest().build();
+
+        List<AgriculturalActivityResource> resources = activities.stream()
+                .map(AgriculturalActivityResourceAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(resources);
     }
 }

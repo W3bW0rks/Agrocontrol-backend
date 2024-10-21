@@ -41,4 +41,25 @@ public class AgriculturalActivityManager {
     public List<AgriculturalActivity> getActivities() {
         return activities;
     }
+
+    public List<AgriculturalActivity> getActivitiesByType(ActivityType activityType) {
+        List<AgriculturalActivity> activitiesByType = new ArrayList<>();
+        for (AgriculturalActivity activity : activities) {
+            if (activity.getActivityType().equals(activityType)) {
+                activitiesByType.add(activity);
+            }
+        }
+        return activitiesByType;
+    }
+
+    public AgriculturalActivity getLastActivityByType(ActivityType activityType) {
+        for (int i = activities.size() - 1; i >= 0; i--) {
+            AgriculturalActivity activity = activities.get(i);
+            if (activity.getActivityType().equals(activityType)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
 }

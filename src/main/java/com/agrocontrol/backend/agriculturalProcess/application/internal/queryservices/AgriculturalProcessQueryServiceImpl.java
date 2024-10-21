@@ -1,8 +1,10 @@
 package com.agrocontrol.backend.agriculturalProcess.application.internal.queryservices;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessQueryService;
 import com.agrocontrol.backend.agriculturalProcess.infrastructure.persistence.jpa.repositories.AgriculturalProcessRepository;
 import org.springframework.stereotype.Service;
@@ -26,5 +28,11 @@ public class AgriculturalProcessQueryServiceImpl implements AgriculturalProcessQ
     @Override
     public List<AgriculturalProcess> handle(GetAgriculturalProcessByFieldIdQuery query) {
         return this.agriculturalProcessRepository.findByFieldId(query.fieldId());
+    }
+
+    @Override
+    public List<AgriculturalActivity> handle(GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery query) {
+        var agriculturalProcess = this.agriculturalProcessRepository.findById(query.agriculturalProcessId()).orElseThrow();
+        return agriculturalProcess.getActivitiesByType(query.activityType());
     }
 }
