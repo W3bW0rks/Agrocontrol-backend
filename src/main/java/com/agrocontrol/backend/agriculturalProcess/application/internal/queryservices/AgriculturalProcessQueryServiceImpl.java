@@ -4,6 +4,7 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.Agric
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessQueryService;
 import com.agrocontrol.backend.agriculturalProcess.infrastructure.persistence.jpa.repositories.AgriculturalProcessRepository;
@@ -34,5 +35,11 @@ public class AgriculturalProcessQueryServiceImpl implements AgriculturalProcessQ
     public List<AgriculturalActivity> handle(GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery query) {
         var agriculturalProcess = this.agriculturalProcessRepository.findById(query.agriculturalProcessId()).orElseThrow();
         return agriculturalProcess.getActivitiesByType(query.activityType());
+    }
+
+    @Override
+    public Optional<AgriculturalActivity> handle(GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery query) {
+        var agriculturalProcess = this.agriculturalProcessRepository.findById(query.agriculturalProcessId()).orElseThrow();
+        return Optional.ofNullable(agriculturalProcess.getLastActivityByType(query.activityType()));
     }
 }

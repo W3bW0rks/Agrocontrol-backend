@@ -64,4 +64,8 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
     public List<AgriculturalActivity> getActivitiesByType(ActivityType activityType) {
         return activityManager.getActivitiesByType(activityType);
     }
+
+    public AgriculturalActivity getLastActivityByType(ActivityType activityType) {
+        return activityManager.getLastActivityByType(activityType);
+    }
 }

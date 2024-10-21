@@ -11,4 +11,5 @@ public interface AgriculturalProcessQueryService {
     Optional<AgriculturalProcess> handle(GetAgriculturalProcessByIdQuery query);
     List<AgriculturalProcess> handle(GetAgriculturalProcessByFieldIdQuery query);
     List<AgriculturalActivity> handle(GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery query);
+    Optional<AgriculturalActivity> handle(GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery query);
 }

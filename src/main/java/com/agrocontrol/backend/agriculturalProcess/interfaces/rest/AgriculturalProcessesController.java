@@ -6,6 +6,7 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeed
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;
@@ -187,5 +188,27 @@ public class AgriculturalProcessesController {
         List<AgriculturalActivityResource> resources = activities.stream()
                 .map(AgriculturalActivityResourceAssembler::toResourceFromEntity).toList();
         return ResponseEntity.ok(resources);
+    }
+
+    @Operation(
+            summary = "Get last activity by activity type and agricultural process id",
+            description = "Get last activity by activity type and agricultural process id"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Activity found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @GetMapping("/last-activity")
+    public ResponseEntity<AgriculturalActivityResource> getLastActivityByActivityTypeAndAgriculturalProcessId(
+            @RequestParam String activityType,
+            @RequestParam Long agriculturalProcessId) {
+        ActivityType type = ActivityType.valueOf(activityType);
+        var query = new GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery(agriculturalProcessId, type);
+        var lastActivity = this.queryService.handle(query);
+
+        return lastActivity.map(source ->
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
+                                HttpStatus.OK))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }
