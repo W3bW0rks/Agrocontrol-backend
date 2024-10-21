@@ -198,10 +198,10 @@ public class AgriculturalProcessesController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Activity found"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @GetMapping("/last-activity")
+    @GetMapping("/{agriculturalProcessId}/lastActivity/{activityType}")
     public ResponseEntity<AgriculturalActivityResource> getLastActivityByActivityTypeAndAgriculturalProcessId(
-            @RequestParam String activityType,
-            @RequestParam Long agriculturalProcessId) {
+            @PathVariable String activityType,
+            @PathVariable Long agriculturalProcessId) {
         ActivityType type = ActivityType.valueOf(activityType);
         var query = new GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery(agriculturalProcessId, type);
         var lastActivity = this.queryService.handle(query);
