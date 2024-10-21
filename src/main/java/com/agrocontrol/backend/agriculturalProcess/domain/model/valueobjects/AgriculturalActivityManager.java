@@ -26,7 +26,7 @@ public class AgriculturalActivityManager {
         if (agriculturalProcess.isFinished()) {
             throw new IllegalArgumentException("Cannot add activity to a finished process");
         }
-        Irrigation irrigation = new Irrigation(agriculturalProcess, activityType, command.hoursIrrigated());
+        Irrigation irrigation = new Irrigation(agriculturalProcess, activityType, command.date(), command.hoursIrrigated());
         this.activities.add(irrigation);
     }
 
@@ -34,7 +34,7 @@ public class AgriculturalActivityManager {
         if (agriculturalProcess.isFinished()) {
             throw new IllegalArgumentException("Cannot add activity to a finished process");
         }
-        Seeding seeding = new Seeding(agriculturalProcess, activityType, command.plantType(), command.quantityPlanted());
+        Seeding seeding = new Seeding(agriculturalProcess, activityType, command.plantType(), command.date(), command.quantityPlanted());
         this.activities.add(seeding);
     }
 

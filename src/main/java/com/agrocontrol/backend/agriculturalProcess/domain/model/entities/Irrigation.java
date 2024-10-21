@@ -16,8 +16,8 @@ public class Irrigation extends AgriculturalActivity {
 
     protected Irrigation() {}
 
-    public Irrigation(AgriculturalProcess agriculturalProcess, ActivityType activityType, Integer hoursIrrigated) {
-        super(agriculturalProcess, activityType);
+    public Irrigation(AgriculturalProcess agriculturalProcess, ActivityType activityType, String date, Integer hoursIrrigated) {
+        super(agriculturalProcess, activityType, date);
         this.hoursIrrigated = hoursIrrigated;
     }
 }

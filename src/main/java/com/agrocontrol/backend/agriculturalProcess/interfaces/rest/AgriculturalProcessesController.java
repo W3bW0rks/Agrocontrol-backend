@@ -71,21 +71,22 @@ public class AgriculturalProcessesController {
     @PostMapping("/add-activity")
     public ResponseEntity<AgriculturalProcessResource> addActivityToAgriculturalProcess(
             @RequestParam Long agriculturalProcessId,
+            @RequestParam String date,
             @RequestParam(required = false) Integer hoursIrrigated,
             @RequestParam(required = false) String plantType,
             @RequestParam(required = false) Integer quantityPlanted) {
 
         if (hoursIrrigated != null) {
-            return addIrrigationToProcess(hoursIrrigated, agriculturalProcessId);
+            return addIrrigationToProcess(date, hoursIrrigated, agriculturalProcessId);
         } else if (plantType != null && quantityPlanted != null) {
-            return addSeedingToProcess(plantType, quantityPlanted, agriculturalProcessId);
+            return addSeedingToProcess(date, plantType, quantityPlanted, agriculturalProcessId);
         } else {
             return ResponseEntity.badRequest().body(null); // Bad request si faltan parámetros
         }
     }
 
-    private ResponseEntity<AgriculturalProcessResource> addIrrigationToProcess(Integer hoursIrrigated, Long agriculturalProcessId) {
-        var command = new AddIrrigationToProcessCommand(hoursIrrigated, agriculturalProcessId);
+    private ResponseEntity<AgriculturalProcessResource> addIrrigationToProcess(String date, Integer hoursIrrigated, Long agriculturalProcessId) {
+        var command = new AddIrrigationToProcessCommand(date, hoursIrrigated, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
         return agriculturalProcess.map(source ->
@@ -94,8 +95,8 @@ public class AgriculturalProcessesController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    private ResponseEntity<AgriculturalProcessResource> addSeedingToProcess(String plantType, Integer quantityPlanted, Long agriculturalProcessId) {
-        var command = new AddSeedingToProcessCommand(plantType, quantityPlanted, agriculturalProcessId);
+    private ResponseEntity<AgriculturalProcessResource> addSeedingToProcess(String date, String plantType, Integer quantityPlanted, Long agriculturalProcessId) {
+        var command = new AddSeedingToProcessCommand(date, plantType, quantityPlanted, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
         return agriculturalProcess.map(source ->

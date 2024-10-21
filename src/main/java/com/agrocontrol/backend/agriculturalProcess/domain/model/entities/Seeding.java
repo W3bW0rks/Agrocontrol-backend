@@ -22,8 +22,8 @@ public class Seeding extends AgriculturalActivity {
 
     protected Seeding() {}
 
-    public Seeding(AgriculturalProcess agriculturalProcess, ActivityType activityType, String plantType, Integer quantityPlanted) {
-        super(agriculturalProcess, activityType);
+    public Seeding(AgriculturalProcess agriculturalProcess, ActivityType activityType, String date, String plantType, Integer quantityPlanted) {
+        super(agriculturalProcess, activityType, date);
         this.plantType = plantType;
         this.quantityPlanted = quantityPlanted;
     }

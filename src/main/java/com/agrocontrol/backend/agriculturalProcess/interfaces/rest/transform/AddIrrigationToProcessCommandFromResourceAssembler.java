@@ -6,6 +6,7 @@ import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.Add
 public class AddIrrigationToProcessCommandFromResourceAssembler {
     public static AddIrrigationToProcessCommand toCommandFromResource(AddIrrigationToProcessResource resource) {
         return new AddIrrigationToProcessCommand(
+                resource.date(),
                 resource.hoursIrrigated(),
                 resource.agriculturalProcessId()
         );

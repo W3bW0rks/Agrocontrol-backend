@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Getter
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -24,15 +22,15 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
     private ActivityType activityType;
 
     @NotNull
-    private LocalDate date;
+    private String date;
 
     private double workersTotalCost;
 
     protected AgriculturalActivity() {}
 
-    public AgriculturalActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType) {
+    public AgriculturalActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, String date) {
         this.agriculturalProcess = agriculturalProcess;
         this.activityType = activityType;
-        this.date = LocalDate.now();
+        this.date = date;
     }
 }

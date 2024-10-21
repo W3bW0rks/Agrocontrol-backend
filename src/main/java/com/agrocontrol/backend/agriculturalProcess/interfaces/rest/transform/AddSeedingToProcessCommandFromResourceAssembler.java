@@ -6,6 +6,7 @@ import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.Add
 public class AddSeedingToProcessCommandFromResourceAssembler {
     public static AddSeedingToProcessCommand toCommandFromResource(AddSeedingToProcessResource resource) {
         return new AddSeedingToProcessCommand(
+                resource.date(),
                 resource.plantType(),
                 resource.quantityPlanted(),
                 resource.agriculturalProcessId()
