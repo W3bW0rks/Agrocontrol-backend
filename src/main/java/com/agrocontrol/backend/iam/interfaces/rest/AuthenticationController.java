@@ -3,6 +3,9 @@ package com.agrocontrol.backend.iam.interfaces.rest;
 import com.agrocontrol.backend.iam.domain.services.UserCommandService;
 import com.agrocontrol.backend.iam.interfaces.rest.resources.*;
 import com.agrocontrol.backend.iam.interfaces.rest.transform.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,6 +57,11 @@ public class AuthenticationController {
      * @param signUpAgriculturalProducerResource the sign-up request body.
      * @return the created user resource.
      */
+    @Operation(summary = "Create Agricultural Producer")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Agricultural Producer created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+    })
     @PostMapping("/sign-up/agricultural-producer")
     public ResponseEntity<UserResource> signUpAgriculturalProducer(@RequestBody SignUpAgriculturalProducerResource signUpAgriculturalProducerResource) {
         var signUpCommand = SignUpAgriculturalProducerCommandFromResourceAssembler.toCommandFromResource(signUpAgriculturalProducerResource);
@@ -70,6 +78,11 @@ public class AuthenticationController {
      * @param signUpDistributorResource the sign-up request body.
      * @return the created user resource.
      */
+    @Operation(summary = "Create Distributor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Distributor created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+    })
     @PostMapping("/sign-up/distributor")
     public ResponseEntity<UserResource> signUpDistributor(@RequestBody SignUpDistributorResource signUpDistributorResource) {
         var signUpCommand = SignUpDistributorCommandFromResourceAssembler.toCommandFromResource(signUpDistributorResource);
