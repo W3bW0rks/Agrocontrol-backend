@@ -19,15 +19,15 @@ public class AgriculturalProducerCommandServiceImpl implements AgriculturalProdu
     @Override
     public Optional<AgriculturalProducer> handle(CreateAgriculturalProducerCommand command, Long userId) {
 
-        AgriculturalProducer agriculturalProducer = new AgriculturalProducer(
-                command.fullName(),
-                command.city(),
-                command.country(),
-                command.phone(),
-                command.dni(),
-                userId
-        );
-        agriculturalProducerRepository.save(agriculturalProducer);
-        return Optional.of(agriculturalProducer);
+        if (agriculturalProducerRepository.existsByPhone_Phone(command.phone())) {
+            throw new IllegalArgumentException("Phone already exists");
+        }
+
+        if (agriculturalProducerRepository.existsByDni_Dni(command.dni())) {
+            throw new IllegalArgumentException("DNI already exists");
+        }
+        var agriculturalProducer = new AgriculturalProducer(command, userId);
+        var createdAgriculturalProducer = agriculturalProducerRepository.save(agriculturalProducer);
+        return Optional.of(createdAgriculturalProducer);
     }
 }

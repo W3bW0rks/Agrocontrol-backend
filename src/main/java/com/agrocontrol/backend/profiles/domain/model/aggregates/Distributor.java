@@ -1,7 +1,11 @@
 package com.agrocontrol.backend.profiles.domain.model.aggregates;
 
 
+import com.agrocontrol.backend.profiles.domain.model.commands.CreateDistributorCommand;
+import com.agrocontrol.backend.profiles.domain.model.valueobjects.Phone;
+import com.agrocontrol.backend.profiles.domain.model.valueobjects.Ruc;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,28 +26,36 @@ public class Distributor extends AuditableAbstractAggregateRoot<Distributor> {
     @NotBlank
     private String country;
 
-    @NotBlank
-    private String phone;
+    @Embedded
+    private Phone phone;
 
     @NotBlank
     private String companyName;
 
-    @NotBlank
-    private String ruc;
+    @Embedded
+    private Ruc ruc;
 
     @NotNull(message = "UserId cannot be null")
     @Positive(message = "UserId must be positive")
     private Long userId;
 
-    public Distributor(String fullName, String city, String country, String phone, String companyName, String ruc, Long userId) {
-        this.fullName = fullName;
-        this.city = city;
-        this.country = country;
-        this.phone = phone;
-        this.companyName = companyName;
-        this.ruc = ruc;
+    public Distributor(CreateDistributorCommand command, Long userId) {
+        this.fullName = command.fullName();
+        this.city = command.city();
+        this.country = command.country();
+        this.phone = new Phone(command.phone());;
+        this.companyName = command.companyName();
+        this.ruc = new Ruc(command.ruc());
         this.userId = userId;
     }
 
     public Distributor() {}
+
+    public String getPhone(){
+        return phone.phone();
+    }
+
+    public String getRuc(){
+        return ruc.ruc();
+    }
 }

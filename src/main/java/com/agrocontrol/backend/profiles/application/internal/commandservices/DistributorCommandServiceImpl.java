@@ -18,16 +18,16 @@ public class DistributorCommandServiceImpl implements DistributorCommandService 
 
     @Override
     public Optional<Distributor> handle(CreateDistributorCommand command, Long userId) {
-        Distributor distributor = new Distributor(
-                command.fullName(),
-                command.city(),
-                command.country(),
-                command.phone(),
-                command.companyName(),
-                command.ruc(),
-                userId
-        );
-        distributorRepository.save(distributor);
-        return Optional.of(distributor);
+        if (distributorRepository.existsByPhone_Phone(command.phone())){
+            throw new IllegalArgumentException("Phone already exists");
+        }
+
+        if (distributorRepository.existsByRuc_Ruc(command.ruc())){
+            throw new IllegalArgumentException("Ruc already exists");
+        }
+
+        var distributor = new Distributor(command, userId);
+        var createdDistributor = distributorRepository.save(distributor);
+        return Optional.of(createdDistributor);
     }
 }
