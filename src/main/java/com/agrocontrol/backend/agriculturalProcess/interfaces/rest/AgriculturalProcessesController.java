@@ -11,17 +11,9 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.Act
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessQueryService;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.AgriculturalActivityResource;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.AgriculturalProcessResource;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.CreateAgriculturalProcessResource;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.FinishAgriculturalProcessResource;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.AgriculturalActivityResourceAssembler;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.AgriculturalProcessResourceFromEntityAssembler;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.CreateAgriculturalProcessCommandFromResourceAssembler;
-import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.FinishAgriculturalProcessCommandFromResourceAssembler;
+import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.*;
+import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -29,12 +21,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/api/v1/agricultural-processes", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Agricultural Processes", description = "Operations related to agricultural processes")
 public class AgriculturalProcessesController {
@@ -124,6 +116,23 @@ public class AgriculturalProcessesController {
         var agriculturalProcess = this.commandService.handle(FinishAgriculturalProcessCommandFromResourceAssembler.toCommandFromResource(resource));
         return agriculturalProcess.map(source ->
                         new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                                HttpStatus.CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @Operation(
+            summary = "Execute an action in an agricultural activity",
+            description = "Execute an action in an agricultural activity with the provided parameters"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Action executed"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PutMapping("/activity/{activityId}/execute")
+    public ResponseEntity<AgriculturalActivityResource> executeActionInAgriculturalActivity(@RequestBody ExecuteAgriculturalActivityActionResource resource) {
+        var activity = this.commandService.handle(ExecuteAgriculturalActivityActionCommandFromResourceAssembler.toCommandFromResource(resource));
+        return activity.map(source ->
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

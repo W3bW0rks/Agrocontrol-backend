@@ -3,6 +3,7 @@ package com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.CreateAgriculturalProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.ExecuteAgriculturalActivityActionCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivityManager;
@@ -57,6 +58,20 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
         activityManager.addActivity(this, ActivityType.IRRIGATION, command);
     }
 
+    public void applyActivityAction(ExecuteAgriculturalActivityActionCommand command) {
+        switch (command.action()) {
+            case "start":
+                activityManager.startActivity(command.activityId());
+                break;
+            case "finish":
+                activityManager.finishActivity(command.activityId());
+                break;
+            case "cancel":
+                activityManager.cancelActivity(command.activityId());
+                break;
+        }
+    }
+
     public List<AgriculturalActivity> getActivities() {
         return activityManager.getActivities();
     }
@@ -67,5 +82,9 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
 
     public AgriculturalActivity getLastActivityByType(ActivityType activityType) {
         return activityManager.getLastActivityByType(activityType);
+    }
+
+    public AgriculturalActivity getActivityById(Long activityId) {
+        return activityManager.getActivityById(activityId);
     }
 }

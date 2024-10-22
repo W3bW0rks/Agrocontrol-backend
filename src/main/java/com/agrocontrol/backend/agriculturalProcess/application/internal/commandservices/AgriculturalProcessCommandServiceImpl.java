@@ -1,10 +1,8 @@
 package com.agrocontrol.backend.agriculturalProcess.application.internal.commandservices;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.CreateAgriculturalProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.FinishAgriculturalProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.*;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;
 import com.agrocontrol.backend.agriculturalProcess.infrastructure.persistence.jpa.repositories.AgriculturalProcessRepository;
 import org.springframework.stereotype.Service;
@@ -54,5 +52,15 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         agriculturalProcess.finish();
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.of(updatedAgriculturalProcess);
+    }
+
+    @Override
+    public Optional<AgriculturalActivity> handle(ExecuteAgriculturalActivityActionCommand command) {
+        var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
+                .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
+
+        agriculturalProcess.applyActivityAction(command);
+        var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
+        return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.activityId()));
     }
 }

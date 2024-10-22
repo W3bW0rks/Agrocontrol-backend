@@ -14,6 +14,7 @@ public class AgriculturalActivityResourceAssembler {
                     entity.getAgriculturalProcess().getId(),
                     ActivityType.IRRIGATION.name(),
                     entity.getDate(),
+                    entity.getActivityStatus().name(),
                     irrigation.getHoursIrrigated(),
                     null,
                     null
@@ -24,6 +25,7 @@ public class AgriculturalActivityResourceAssembler {
                     entity.getAgriculturalProcess().getId(),
                     ActivityType.SEEDING.name(),
                     entity.getDate(),
+                    entity.getActivityStatus().name(),
                     null,
                     seeding.getPlantType(),
                     seeding.getQuantityPlanted()

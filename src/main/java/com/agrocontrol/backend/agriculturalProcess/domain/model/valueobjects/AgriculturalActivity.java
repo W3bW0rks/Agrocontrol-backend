@@ -24,6 +24,9 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
     @NotNull
     private String date;
 
+    @NotNull
+    private ActivityStatus activityStatus;
+
     private double workersTotalCost;
 
     protected AgriculturalActivity() {}
@@ -32,5 +35,18 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
         this.agriculturalProcess = agriculturalProcess;
         this.activityType = activityType;
         this.date = date;
+        this.activityStatus = ActivityStatus.NOT_STARTED;
+    }
+
+    public void start() {
+        this.activityStatus = ActivityStatus.IN_PROGRESS;
+    }
+
+    public void finish() {
+        this.activityStatus = ActivityStatus.FINISHED;
+    }
+
+    public void cancel() {
+        this.activityStatus = ActivityStatus.CANCELLED;
     }
 }

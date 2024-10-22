@@ -5,6 +5,7 @@ public record AgriculturalActivityResource(
         Long agriculturalProcessId,
         String activityType,
         String date,
+        String activityStatus,
         Integer hoursIrrigated,
         String plantType,
         Integer quantityPlanted
