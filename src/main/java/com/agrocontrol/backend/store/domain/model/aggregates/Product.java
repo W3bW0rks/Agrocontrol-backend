@@ -62,4 +62,8 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
 
         this.quantity -= command.quantity();
     }
+
+    public Long getUserId() {
+        return userId.userId();
+    }
 }
