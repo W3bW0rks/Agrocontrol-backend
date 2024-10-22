@@ -48,6 +48,18 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
     }
 
     public void decreaseQuantity(DecreaseQuantityCommand command) {
+
+        if (this.quantity == 0)
+            throw new IllegalArgumentException("Product is out of stock");
+
+        if (this.quantity - command.quantity() <= 0) {
+
+            this.quantity = 0;
+            var exceededQuantity = command.quantity() - this.quantity;
+
+            throw new IllegalArgumentException("Product is out of stock. Exceeded quantity: " + exceededQuantity);
+        }
+
         this.quantity -= command.quantity();
     }
 }
