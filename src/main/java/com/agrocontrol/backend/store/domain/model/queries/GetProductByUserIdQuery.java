@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.domain.model.queries;
+package com.agrocontrol.backend.store.domain.model.queries;
 
 import com.agrocontrol.backend.store.domain.model.valueobjects.UserId;
 

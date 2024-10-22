@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.application.internal.commandservices;
+package com.agrocontrol.backend.store.application.internal.commandservices;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;

@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.application.internal.queryservices;
+package com.agrocontrol.backend.store.application.internal.queryservices;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.queries.GetProductByIdQuery;

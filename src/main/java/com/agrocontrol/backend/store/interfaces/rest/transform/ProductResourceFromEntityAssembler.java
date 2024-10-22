@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.interfaces.rest.transform;
+package com.agrocontrol.backend.store.interfaces.rest.transform;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.interfaces.rest.resources.ProductResource;

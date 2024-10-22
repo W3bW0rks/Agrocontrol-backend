@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.domain.model.valueobjects;
+package com.agrocontrol.backend.store.domain.model.valueobjects;
 
 public record UserId(Long userId) {
     public UserId {

@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.domain.model.aggregates;
+package com.agrocontrol.backend.store.domain.model.aggregates;
 
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;
@@ -6,12 +6,10 @@ import com.agrocontrol.backend.store.domain.model.commands.DecreaseQuantityComma
 import com.agrocontrol.backend.store.domain.model.commands.IncreaseQuantityCommand;
 import com.agrocontrol.backend.store.domain.model.commands.UpdateProductOwnerCommand;
 import com.agrocontrol.backend.store.domain.model.valueobjects.UserId;
-
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import org.apache.catalina.User;
 
 @Getter
 @Entity
@@ -54,9 +52,9 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
 
         if (this.quantity - command.quantity() <= 0) {
 
-            this.quantity = 0;
             var exceededQuantity = command.quantity() - this.quantity;
-
+            this.quantity = 0;
+            
             throw new IllegalArgumentException("Product is out of stock. Exceeded quantity: " + exceededQuantity);
         }
 

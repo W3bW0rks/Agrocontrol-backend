@@ -1,4 +1,4 @@
-﻿package com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositories;
+package com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositories;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.valueobjects.UserId;
