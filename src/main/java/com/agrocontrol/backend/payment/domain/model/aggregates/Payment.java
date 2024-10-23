@@ -35,6 +35,10 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
         this.cvv = command.cvv();
     }
 
+    public Long getSubscriptionId() {
+        return this.subscriptionId.subscriptionId();
+    }
+
 
 
 }
