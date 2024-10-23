@@ -5,9 +5,9 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 
-public record SubscriptionId(Long SubscriptionId) {
+public record SubscriptionId(Long subscriptionId) {
     public SubscriptionId {
-        if (SubscriptionId < 0) {
+        if (subscriptionId < 0) {
             throw new IllegalArgumentException("SubscriptionId must be greater than 0");
         }
     }
