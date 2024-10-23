@@ -39,20 +39,20 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Override
     public Optional<ImmutablePair<User, String>> handle(SignInCommand command) {
-        var user = userRepository.findByUsername(command.username());
+        var user = userRepository.findByEmail(command.email());
         if (user.isEmpty())
             throw new RuntimeException("User not found");
         if (!hashingService.matches(command.password(), user.get().getPassword()))
             throw new RuntimeException("Invalid password");
-        var token = tokenService.generateToken(user.get().getUsername());
+        var token = tokenService.generateToken(user.get().getEmail());
         return Optional.of(ImmutablePair.of(user.get(), token));
     }
 
     @Override
     @Transactional
     public Optional<User> handle(SignUpAgriculturalProducerCommand command) {
-        if (userRepository.existsByUsername(command.username()))
-            throw new RuntimeException("Username already exists");
+        if (userRepository.existsByEmail(command.email()))
+            throw new RuntimeException("Email already exists");
 
         // Buscar el rol de desarrollador en el repositorio de roles
         Role agriculturalProducerRole = roleRepository.findByName(Roles.valueOf("ROLE_AGRICULTURAL_PRODUCER"))
@@ -62,7 +62,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         List<Role> roles = List.of(agriculturalProducerRole);
 
         // Crear el usuario con el rol de agricultural producer
-        var user = new User(command.username(), hashingService.encode(command.password()), roles);
+        var user = new User(command.email(), hashingService.encode(command.password()), roles);
         userRepository.save(user);
 
         Long agriculturalProducerId = externalProfileService.createAgriculturalProducer(
@@ -80,8 +80,8 @@ public class UserCommandServiceImpl implements UserCommandService {
     @Override
     @Transactional
     public Optional<User> handle(SignUpDistributorCommand command) {
-        if (userRepository.existsByUsername(command.username()))
-            throw new RuntimeException("Username already exists");
+        if (userRepository.existsByEmail(command.email()))
+            throw new RuntimeException("Email already exists");
 
         // Buscar el rol de desarrollador en el repositorio de roles
         Role distributorRole = roleRepository.findByName(Roles.valueOf("ROLE_DISTRIBUTOR"))
@@ -91,7 +91,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         List<Role> roles = List.of(distributorRole);
 
         // Crear el usuario con el rol de distribuidor
-        var user = new User(command.username(), hashingService.encode(command.password()), roles);
+        var user = new User(command.email(), hashingService.encode(command.password()), roles);
         userRepository.save(user);
 
         Long distributorId = externalProfileService.createDistributor(

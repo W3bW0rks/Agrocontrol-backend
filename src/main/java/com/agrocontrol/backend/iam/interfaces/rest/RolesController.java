@@ -18,7 +18,7 @@ import java.util.List;
  *  This controller is responsible for handling all the requests related to roles
  */
 @RestController
-@RequestMapping(value = "/ap/v1/roles", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/roles", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Roles", description = "Role Management Endpoints")
 public class RolesController {
     private final RoleQueryService roleQueryService;

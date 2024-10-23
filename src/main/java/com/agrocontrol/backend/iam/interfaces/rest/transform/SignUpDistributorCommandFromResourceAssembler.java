@@ -5,7 +5,7 @@ import com.agrocontrol.backend.iam.interfaces.rest.resources.SignUpDistributorRe
 
 public class SignUpDistributorCommandFromResourceAssembler {
     public static SignUpDistributorCommand toCommandFromResource(SignUpDistributorResource resource) {
-        return new SignUpDistributorCommand(resource.fullName(), resource.username() ,resource.password(),
+        return new SignUpDistributorCommand(resource.fullName(), resource.email() ,resource.password(),
                 resource.city(), resource.country(), resource.phone(), resource.companyName(),resource.ruc());
     }
 }

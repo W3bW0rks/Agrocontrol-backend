@@ -5,7 +5,7 @@ import com.agrocontrol.backend.iam.interfaces.rest.resources.SignUpAgriculturalP
 
 public class SignUpAgriculturalProducerCommandFromResourceAssembler{
     public static SignUpAgriculturalProducerCommand toCommandFromResource(SignUpAgriculturalProducerResource resource) {
-        return new SignUpAgriculturalProducerCommand(resource.fullName(), resource.username() ,resource.password(),
+        return new SignUpAgriculturalProducerCommand(resource.fullName(), resource.email() ,resource.password(),
                 resource.city(), resource.country(), resource.phone(), resource.dni());
     }
 }

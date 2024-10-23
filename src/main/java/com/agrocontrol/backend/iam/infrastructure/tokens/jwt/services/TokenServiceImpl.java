@@ -62,10 +62,10 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * Generates a JWT token for the given username.
+     * Generates a JWT token for the given email.
      * Genera un token JWT para el nombre de usuario proporcionado.
      *
-     * @param username the username for which the token is to be generated
+     * @param username the email for which the token is to be generated
      *                 el nombre de usuario para el cual se generará el token
      * @return a JWT token as a String
      *         un token JWT como una cadena
@@ -75,10 +75,10 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * Builds a JWT token with the default expiration time using the provided username.
+     * Builds a JWT token with the default expiration time using the provided email.
      * Construye un token JWT con el tiempo de expiración predeterminado usando el nombre de usuario proporcionado.
      *
-     * @param username the username to be included in the token
+     * @param username the email to be included in the token
      *                 el nombre de usuario que se incluirá en el token
      * @return a JWT token as a String
      *         un token JWT como una cadena
@@ -96,12 +96,12 @@ public class TokenServiceImpl implements BearerTokenService {
     }
 
     /**
-     * Extracts the username from the given JWT token.
+     * Extracts the email from the given JWT token.
      * Extrae el nombre de usuario del token JWT proporcionado.
      *
-     * @param token the JWT token from which to extract the username
+     * @param token the JWT token from which to extract the email
      *              el token JWT del cual extraer el nombre de usuario
-     * @return the username as a String
+     * @return the email as a String
      *         el nombre de usuario como una cadena
      */
     @Override

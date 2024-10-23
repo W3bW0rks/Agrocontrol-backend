@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.iam.interfaces.rest.resources;
 
 public record SignUpDistributorResource(
-        String username,
+        String email,
         String password,
         String fullName,
         String city,

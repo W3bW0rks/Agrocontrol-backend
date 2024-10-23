@@ -5,6 +5,6 @@ import com.agrocontrol.backend.iam.interfaces.rest.resources.AuthenticatedUserRe
 
 public class AuthenticatedUserResourceFromEntityAssembler {
     public static AuthenticatedUserResource toResourceFromEntity(User user, String token) {
-        return new AuthenticatedUserResource(user.getId(), user.getUsername(), token, user.getSerializedRoles());
+        return new AuthenticatedUserResource(user.getId(), user.getEmail(), token, user.getSerializedRoles());
     }
 }
