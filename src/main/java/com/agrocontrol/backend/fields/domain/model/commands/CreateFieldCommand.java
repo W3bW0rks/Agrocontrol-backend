@@ -1,6 +1,6 @@
-package com.agrocontrol.backend.fields.domain.commands;
+package com.agrocontrol.backend.fields.domain.model.commands;
 
-import com.agrocontrol.backend.fields.domain.valueobjects.ProducerId;
+import com.agrocontrol.backend.fields.domain.model.valueobjects.ProducerId;
 
 /**
  *  command to create a Field

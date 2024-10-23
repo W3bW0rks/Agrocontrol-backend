@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.fields.domain.queries;
+package com.agrocontrol.backend.fields.domain.model.queries;
 
 /**
  * Query to get field by a field ID

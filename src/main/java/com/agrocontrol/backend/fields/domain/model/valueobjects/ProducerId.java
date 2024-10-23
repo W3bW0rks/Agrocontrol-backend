@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.fields.domain.valueobjects;
+package com.agrocontrol.backend.fields.domain.model.valueobjects;
 
 public record ProducerId(Long producerId) {
     public ProducerId{

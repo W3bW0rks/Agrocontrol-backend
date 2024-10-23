@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.fields.domain.commands;
+package com.agrocontrol.backend.fields.domain.model.commands;
 
 /**
  * Command to update field
