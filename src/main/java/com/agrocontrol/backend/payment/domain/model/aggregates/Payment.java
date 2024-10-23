@@ -37,5 +37,4 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
 
 
 
-
 }
