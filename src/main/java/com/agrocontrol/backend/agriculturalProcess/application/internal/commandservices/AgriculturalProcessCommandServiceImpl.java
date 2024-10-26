@@ -73,4 +73,17 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.activityId()));
     }
+
+    @Override
+    public Optional<AgriculturalActivity> handle(AddResourceToActivityCommand command) {
+        var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
+                .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
+
+        // TODO: Implement method to assign name to resource
+        String name = "Resource";
+
+        agriculturalProcess.addResourceToActivity(command, name);
+        var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
+        return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.activityId()));
+    }
 }

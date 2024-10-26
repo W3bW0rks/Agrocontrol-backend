@@ -3,6 +3,7 @@ package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddCropTreatmentToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddResourceToActivityCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.CropTreatment;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Irrigation;
@@ -46,6 +47,11 @@ public class AgriculturalActivityManager {
     public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddCropTreatmentToProcessCommand command) {
         CropTreatment cropTreatment = new CropTreatment(agriculturalProcess, activityType, command.date(), command.treatmentType());
         this.activities.add(cropTreatment);
+    }
+
+    public void addResourceToActivity(AddResourceToActivityCommand command, String name) {
+        AgriculturalActivity activity = getActivityById(command.activityId());
+        activity.addResource(command.resourceId(), name, command.cost(), command.quantity());
     }
 
     // Check if an activity is in a specific status

@@ -1,5 +1,7 @@
 package com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources;
 
+import java.util.List;
+
 public record AgriculturalActivityResource(
         Long id,
         Long agriculturalProcessId,
@@ -9,6 +11,7 @@ public record AgriculturalActivityResource(
         Integer hoursIrrigated,
         String plantType,
         Integer quantityPlanted,
-        String treatmentType
+        String treatmentType,
+        List<ResourceEntityResource> resources
 ) {
 }

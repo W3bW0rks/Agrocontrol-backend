@@ -118,6 +118,23 @@ public class AgriculturalProcessesController {
     }
 
     @Operation(
+            summary = "Add resource to an activity",
+            description = "Add a resource to an activity with the provided parameters"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Resource added to the activity"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
+    })
+    @PostMapping("/activity/add-resource")
+    public ResponseEntity<AgriculturalActivityResource> addResourceToActivity(@RequestBody AddResourceToActivityResource resource) {
+        var activity = this.commandService.handle(AddResourceToActivityCommandFromResourceAssembler.toCommandFromResource(resource));
+        return activity.map(source ->
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
+                                HttpStatus.CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @Operation(
             summary = "Finish an agricultural process",
             description = "Finish an agricultural process with the provided parameters"
     )

@@ -59,6 +59,10 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
         activityManager.addActivity(this, ActivityType.CROP_TREATMENT, command);
     }
 
+    public void addResourceToActivity(AddResourceToActivityCommand command, String name) {
+        activityManager.addResourceToActivity(command, name);
+    }
+
     public void applyActivityAction(ExecuteAgriculturalActivityActionCommand command) {
         switch (command.action()) {
             case "start":

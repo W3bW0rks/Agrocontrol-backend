@@ -1,10 +1,14 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddResourceToActivityCommand;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -29,6 +33,10 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
 
     private double workersTotalCost;
 
+    @ElementCollection
+    @CollectionTable(name = "activity_resources", joinColumns = @JoinColumn(name = "activity_id"))
+    private List<Resource> resources = new ArrayList<>();
+
     protected AgriculturalActivity() {}
 
     public AgriculturalActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, String date) {
@@ -48,5 +56,14 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
 
     public void cancel() {
         this.activityStatus = ActivityStatus.CANCELLED;
+    }
+
+    public void addResource(Long resourceId, String name, Integer cost, Integer quantity) {
+        this.resources.add(new Resource(resourceId, name, cost, quantity));
+        calculateWorkersTotalCost();
+    }
+
+    private void calculateWorkersTotalCost() {
+        this.workersTotalCost = this.resources.stream().mapToDouble(Resource::getCost).sum();
     }
 }
