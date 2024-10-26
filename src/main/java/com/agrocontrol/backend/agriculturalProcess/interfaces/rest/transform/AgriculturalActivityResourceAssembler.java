@@ -1,6 +1,7 @@
 package com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.CropTreatment;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Harvest;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Irrigation;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Seeding;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
@@ -27,6 +28,9 @@ public class AgriculturalActivityResourceAssembler {
                     null,
                     null,
                     null,
+                    0,
+                    0,
+                    0,
                     resources
             );
             case Seeding seeding -> new AgriculturalActivityResource(
@@ -40,6 +44,9 @@ public class AgriculturalActivityResourceAssembler {
                     seeding.getPlantType(),
                     seeding.getQuantityPlanted(),
                     null,
+                    0,
+                    0,
+                    0,
                     resources
             );
             case CropTreatment cropTreatment -> new AgriculturalActivityResource(
@@ -53,6 +60,25 @@ public class AgriculturalActivityResourceAssembler {
                     null,
                     null,
                     cropTreatment.getTreatmentType(),
+                    0,
+                    0,
+                    0,
+                    resources
+            );
+            case Harvest harvest -> new AgriculturalActivityResource(
+                    entity.getId(),
+                    entity.getAgriculturalProcess().getId(),
+                    ActivityType.HARVEST.name(),
+                    entity.getDate(),
+                    entity.getActivityStatus().name(),
+                    entity.getWorkersTotalCost(),
+                    null,
+                    null,
+                    null,
+                    null,
+                    harvest.getQuantityInKg(),
+                    harvest.getPricePerKg(),
+                    harvest.getTotalIncome(),
                     resources
             );
             default -> null;

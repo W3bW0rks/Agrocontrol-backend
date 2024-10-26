@@ -1,11 +1,9 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddCropTreatmentToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddResourceToActivityCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.*;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.CropTreatment;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Harvest;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Irrigation;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Seeding;
 import jakarta.persistence.CascadeType;
@@ -47,6 +45,11 @@ public class AgriculturalActivityManager {
     public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddCropTreatmentToProcessCommand command) {
         CropTreatment cropTreatment = new CropTreatment(agriculturalProcess, activityType, command.date(), command.treatmentType());
         this.activities.add(cropTreatment);
+    }
+
+    public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddHarvestToProcessCommand command) {
+        Harvest harvest = new Harvest(agriculturalProcess, activityType, command.date(), command.quantityInKg(), command.pricePerKg());
+        this.activities.add(harvest);
     }
 
     public void addResourceToActivity(AddResourceToActivityCommand command, String name) {

@@ -2,6 +2,7 @@ package com.agrocontrol.backend.agriculturalProcess.interfaces.rest;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddCropTreatmentToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddHarvestToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
@@ -74,7 +75,9 @@ public class AgriculturalProcessesController {
             @RequestParam(required = false) Integer hoursIrrigated,
             @RequestParam(required = false) String plantType,
             @RequestParam(required = false) Integer quantityPlanted,
-            @RequestParam(required = false) String treatmentType) {
+            @RequestParam(required = false) String treatmentType,
+            @RequestParam(required = false) double quantityInKg,
+            @RequestParam(required = false) double pricePerKg) {
 
         if (hoursIrrigated != null) {
             return addIrrigationToProcess(date, hoursIrrigated, agriculturalProcessId);
@@ -82,9 +85,21 @@ public class AgriculturalProcessesController {
             return addSeedingToProcess(date, plantType, quantityPlanted, agriculturalProcessId);
         } else if (treatmentType != null) {
             return addCropTreatmentToProcess(date, treatmentType, agriculturalProcessId);
+        } else if (quantityInKg != 0 && pricePerKg != 0) {
+            return addHarvestToProcess(date, quantityInKg, pricePerKg, agriculturalProcessId);
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    private ResponseEntity<AgriculturalProcessResource> addHarvestToProcess(String date, double quantityInKg, double pricePerKg, Long agriculturalProcessId) {
+        var command = new AddHarvestToProcessCommand(date, quantityInKg, pricePerKg, agriculturalProcessId);
+        var agriculturalProcess = this.commandService.handle(command);
+
+        return agriculturalProcess.map(source ->
+                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                                HttpStatus.CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     private ResponseEntity<AgriculturalProcessResource> addCropTreatmentToProcess(String date, String treatmentType, Long agriculturalProcessId) {

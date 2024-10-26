@@ -13,6 +13,9 @@ public record AgriculturalActivityResource(
         String plantType,
         Integer quantityPlanted,
         String treatmentType,
+        double quantityInKg,
+        double pricePerKg,
+        double totalIncome,
         List<ResourceEntityResource> resources
 ) {
 }
