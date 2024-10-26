@@ -1,5 +1,9 @@
 package com.agrocontrol.backend.fields.domain.model.commands;
 
+import com.agrocontrol.backend.fields.domain.exceptions.FieldLocationNotValidException;
+import com.agrocontrol.backend.fields.domain.exceptions.FieldNameNotValidException;
+import com.agrocontrol.backend.fields.domain.exceptions.FieldSizeNotValidException;
+
 /**
  * Command to update field
  * @param name The name of the field
@@ -9,7 +13,9 @@ package com.agrocontrol.backend.fields.domain.model.commands;
 public record UpdateFieldCommand(
         String name,
         String location,
-        Integer size
+        Integer size,
+        Long FieldId,
+        Long producerId
 ) {
     /**
      * Constructor
@@ -22,10 +28,10 @@ public record UpdateFieldCommand(
      */
     public UpdateFieldCommand{
         if(name == null || name.isBlank())
-            throw new IllegalArgumentException("Field name cannot be null or empty");
+            throw new FieldNameNotValidException(name);
         if(location == null || location.isBlank())
-            throw new IllegalArgumentException("Location cannot be null or empty");
+            throw new FieldLocationNotValidException(location);
         if(size == null || size <= 0)
-            throw new IllegalArgumentException("Size must be greater than 0");
+            throw new FieldSizeNotValidException(size);
     }
 }

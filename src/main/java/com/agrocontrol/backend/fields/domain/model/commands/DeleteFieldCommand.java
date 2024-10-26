@@ -1,10 +1,11 @@
 package com.agrocontrol.backend.fields.domain.model.commands;
 
+import com.agrocontrol.backend.fields.domain.exceptions.FieldIdNotValidException;
 import com.agrocontrol.backend.fields.domain.model.valueobjects.ProducerId;
 
 public record DeleteFieldCommand(
         Long fieldId,
-        ProducerId producerId
+        Long producerId
 ) {
     /**
      * Constructor
@@ -15,6 +16,6 @@ public record DeleteFieldCommand(
      */
     public DeleteFieldCommand{
         if(fieldId == null || fieldId <= 0)
-            throw new IllegalArgumentException("field ID cannot be null or less than zero");
+            throw new FieldIdNotValidException(fieldId);
     }
 }

@@ -1,5 +1,8 @@
 package com.agrocontrol.backend.fields.domain.model.commands;
 
+import com.agrocontrol.backend.fields.domain.exceptions.FieldLocationNotValidException;
+import com.agrocontrol.backend.fields.domain.exceptions.FieldNameNotValidException;
+import com.agrocontrol.backend.fields.domain.exceptions.FieldSizeNotValidException;
 import com.agrocontrol.backend.fields.domain.model.valueobjects.ProducerId;
 
 /**
@@ -10,7 +13,7 @@ import com.agrocontrol.backend.fields.domain.model.valueobjects.ProducerId;
  * @param size the size
  */
 public record CreateFieldCommand(
-        ProducerId producerId,
+        Long producerId,
         String fieldName,
         String location,
         Integer size
@@ -28,10 +31,10 @@ public record CreateFieldCommand(
      */
     public CreateFieldCommand {
         if(fieldName == null || fieldName.isBlank())
-            throw new IllegalArgumentException("fieldName cannot be null or empty");
+            throw new FieldNameNotValidException(fieldName);
         if(location== null || location.isBlank())
-            throw new IllegalArgumentException("location cannot be null or empty");
+            throw new FieldLocationNotValidException(location);
         if(size == null || size <= 0)
-            throw new IllegalArgumentException("size must be greater than 0");
+            throw new FieldSizeNotValidException(size);
     }
 }
