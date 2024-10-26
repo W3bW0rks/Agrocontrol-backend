@@ -4,7 +4,7 @@ import com.agrocontrol.backend.payment.domain.model.valueobjects.SubscriptionId;
 
 public record PaymentResource(
         Long id,
-        SubscriptionId subscriptionId,
+        Long subscriptionId,
         String date,
         String state,
         String cardHolderName,

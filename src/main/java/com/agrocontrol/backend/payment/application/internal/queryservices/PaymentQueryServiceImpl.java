@@ -16,15 +16,15 @@ public class PaymentQueryServiceImpl implements PaymentQueryService {
     public PaymentQueryServiceImpl(PaymentRepository paymentRepository) {
         this.paymentRepository = paymentRepository;
 }
-    @Override
-    public Optional<Payment> handle(GetPaymentBySubscriptionIdQuery query){
-        return this.paymentRepository.findSubscriptionId(query.subscriptionId());
-    }
+
 
     @Override
     public Optional<Payment> handle(GetPaymentByIdQuery query) {
-        return this.paymentRepository.findById(query.id());
+        return paymentRepository.findById(query.id());
     }
 
-
+    @Override
+    public Optional<Payment> handle(GetPaymentBySubscriptionIdQuery query) {
+        return paymentRepository.findBySubscriptionId(query.subscriptionId());
+    }
 }

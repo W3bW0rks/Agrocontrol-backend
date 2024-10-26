@@ -18,9 +18,13 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
 
     @Override
     public Optional<Payment> handle(CreatePaymentCommand command) {
+        if(command.cardNumber() == null || command.cardNumber().length() != 16){
+            throw new IllegalArgumentException("Card number must be 16 digits");
+        }
         var payment = new Payment(command);
         var createdPayment = paymentRepository.save(payment);
         return Optional.of(createdPayment);
+
 
 
     }

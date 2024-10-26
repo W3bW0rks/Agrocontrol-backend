@@ -5,7 +5,7 @@ import com.agrocontrol.backend.payment.domain.model.valueobjects.SubscriptionId;
 import java.time.LocalDate;
 
 public record CreatePaymentResource(
-        SubscriptionId subscriptionId,
+        Long subscriptionId,
          LocalDate date,
          String state,
          String cardHolderName,
