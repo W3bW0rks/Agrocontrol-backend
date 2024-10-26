@@ -8,6 +8,7 @@ public record AgriculturalActivityResource(
         String activityStatus,
         Integer hoursIrrigated,
         String plantType,
-        Integer quantityPlanted
+        Integer quantityPlanted,
+        String treatmentType
 ) {
 }

@@ -1,5 +1,6 @@
 package com.agrocontrol.backend.agriculturalProcess.interfaces.rest.transform;
 
+import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.CropTreatment;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Irrigation;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Seeding;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
@@ -17,6 +18,7 @@ public class AgriculturalActivityResourceAssembler {
                     entity.getActivityStatus().name(),
                     irrigation.getHoursIrrigated(),
                     null,
+                    null,
                     null
             );
         } else if (entity instanceof Seeding seeding) {
@@ -28,7 +30,20 @@ public class AgriculturalActivityResourceAssembler {
                     entity.getActivityStatus().name(),
                     null,
                     seeding.getPlantType(),
-                    seeding.getQuantityPlanted()
+                    seeding.getQuantityPlanted(),
+                    null
+            );
+        } else if (entity instanceof CropTreatment cropTreatment) {
+            return new AgriculturalActivityResource(
+                    entity.getId(),
+                    entity.getAgriculturalProcess().getId(),
+                    ActivityType.CROP_TREATMENT.name(),
+                    entity.getDate(),
+                    entity.getActivityStatus().name(),
+                    null,
+                    null,
+                    null,
+                    cropTreatment.getTreatmentType()
             );
         } else {
             return null;

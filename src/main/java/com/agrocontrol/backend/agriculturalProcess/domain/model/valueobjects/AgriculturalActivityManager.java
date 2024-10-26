@@ -1,8 +1,10 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddCropTreatmentToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.CropTreatment;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Irrigation;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.entities.Seeding;
 import jakarta.persistence.CascadeType;
@@ -33,6 +35,11 @@ public class AgriculturalActivityManager {
     public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddSeedingToProcessCommand command) {
         Seeding seeding = new Seeding(agriculturalProcess, activityType, command.plantType(), command.date(), command.quantityPlanted());
         this.activities.add(seeding);
+    }
+
+    public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddCropTreatmentToProcessCommand command) {
+        CropTreatment cropTreatment = new CropTreatment(agriculturalProcess, activityType, command.date(), command.treatmentType());
+        this.activities.add(cropTreatment);
     }
 
     // Check if an activity is in a specific status

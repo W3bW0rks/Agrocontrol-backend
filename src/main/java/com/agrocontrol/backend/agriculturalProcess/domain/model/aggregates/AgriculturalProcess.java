@@ -1,9 +1,6 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates;
 
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.CreateAgriculturalProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.ExecuteAgriculturalActivityActionCommand;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.*;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivityManager;
@@ -56,6 +53,10 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
 
     public void addActivity(AddIrrigationToProcessCommand command) {
         activityManager.addActivity(this, ActivityType.IRRIGATION, command);
+    }
+
+    public void addActivity(AddCropTreatmentToProcessCommand command) {
+        activityManager.addActivity(this, ActivityType.CROP_TREATMENT, command);
     }
 
     public void applyActivityAction(ExecuteAgriculturalActivityActionCommand command) {

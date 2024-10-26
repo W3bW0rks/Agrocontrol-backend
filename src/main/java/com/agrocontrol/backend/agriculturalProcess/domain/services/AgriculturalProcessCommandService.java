@@ -10,6 +10,7 @@ public interface AgriculturalProcessCommandService {
     Optional<AgriculturalProcess> handle(CreateAgriculturalProcessCommand command);
     Optional<AgriculturalProcess> handle(AddSeedingToProcessCommand command);
     Optional<AgriculturalProcess> handle(AddIrrigationToProcessCommand command);
+    Optional<AgriculturalProcess> handle(AddCropTreatmentToProcessCommand command);
     Optional<AgriculturalProcess> handle(FinishAgriculturalProcessCommand command);
     Optional<AgriculturalActivity> handle(ExecuteAgriculturalActivityActionCommand command);
 }
