@@ -1,7 +1,6 @@
 package com.agrocontrol.backend.fields.domain.services;
 
 import com.agrocontrol.backend.fields.domain.model.aggregates.Field;
-import com.agrocontrol.backend.fields.domain.model.queries.GetAllFieldsQuery;
 import com.agrocontrol.backend.fields.domain.model.queries.GetFieldByIdQuery;
 import com.agrocontrol.backend.fields.domain.model.queries.GetFieldsByProducerIdQuery;
 
@@ -27,10 +26,4 @@ public interface FieldQueryService {
      */
     List<Field> handle(GetFieldsByProducerIdQuery query);
 
-    /**
-     * get all of fields
-     * @param query the query to get all of fields
-     * @return a list of all fields
-     */
-    List<Field> handle(GetAllFieldsQuery query);
 }

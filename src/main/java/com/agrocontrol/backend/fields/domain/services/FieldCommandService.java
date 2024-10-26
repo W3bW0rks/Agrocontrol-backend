@@ -16,7 +16,7 @@ public interface FieldCommandService {
      * @param command The command to create a new field containing the field data
      * @return The created field ID
      */
-    Long handle(CreateFieldCommand command);
+    Optional<Field> handle(CreateFieldCommand command);
 
     /**
      * Handles the command to update an existing field containing the field data
