@@ -31,12 +31,18 @@ public class AgriculturalActivityManager {
         this.activities.add(irrigation);
     }
 
-    // Adds a seeding activity to the list
+    // Adds a seeding activity to the list, but only if it doesn't already exist
     public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddSeedingToProcessCommand command) {
+        boolean seedingExists = activities.stream()
+                .anyMatch(activity -> activity instanceof Seeding);
+        if (seedingExists) {
+            throw new IllegalArgumentException("Seeding activity already exists");
+        }
         Seeding seeding = new Seeding(agriculturalProcess, activityType, command.plantType(), command.date(), command.quantityPlanted());
         this.activities.add(seeding);
     }
 
+    // Adds a crop treatment activity to the list
     public void addActivity(AgriculturalProcess agriculturalProcess, ActivityType activityType, AddCropTreatmentToProcessCommand command) {
         CropTreatment cropTreatment = new CropTreatment(agriculturalProcess, activityType, command.date(), command.treatmentType());
         this.activities.add(cropTreatment);
