@@ -8,6 +8,7 @@ public record AgriculturalActivityResource(
         String activityType,
         String date,
         String activityStatus,
+        double workersTotalCost,
         Integer hoursIrrigated,
         String plantType,
         Integer quantityPlanted,
