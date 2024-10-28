@@ -1,14 +1,12 @@
-package com.agrocontrol.backend.subscription.domain.model.commands;
+package com.agrocontrol.backend.subscription.interfaces.rest.resources;
 
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.PlanTypes;
-import com.agrocontrol.backend.subscription.domain.model.valueobjects.UserId;
 
 import java.time.LocalDate;
 
-public record CreatePaymentCommand(
+public record CreateSubscriptionResource(
         PlanTypes planType,
         Long userId,
-        Long subscriptionId,
         LocalDate startDate,
         LocalDate renewalDate,
         String status,

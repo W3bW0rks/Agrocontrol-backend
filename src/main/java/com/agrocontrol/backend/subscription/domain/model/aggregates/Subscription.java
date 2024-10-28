@@ -2,11 +2,10 @@ package com.agrocontrol.backend.subscription.domain.model.aggregates;
 
 
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import com.agrocontrol.backend.subscription.domain.model.commands.CreatePaymentCommand;
-import com.agrocontrol.backend.subscription.domain.model.commands.RenewPaymentCommand;
+import com.agrocontrol.backend.subscription.domain.model.commands.CreateSubscriptionCommand;
+import com.agrocontrol.backend.subscription.domain.model.commands.RenewSubscriptionCommand;
 import com.agrocontrol.backend.subscription.domain.model.commands.UpdatePlanTypeCommand;
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.PlanTypes;
-import com.agrocontrol.backend.subscription.domain.model.valueobjects.SubscriptionId;
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.UserId;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -17,15 +16,12 @@ import java.time.LocalDate;
 
 @Getter
 @Entity
-public class Payment extends AuditableAbstractAggregateRoot<Payment> {
+public class Subscription extends AuditableAbstractAggregateRoot<Subscription> {
 
     private PlanTypes planType;
 
     @Embedded
     private UserId userId;
-
-    @Embedded
-    private SubscriptionId subscriptionId;
 
     private LocalDate startDate;
 
@@ -35,12 +31,11 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
 
     private double cost;
 
-    protected Payment() {}
+    protected Subscription() {}
 
-    public Payment(CreatePaymentCommand command) {
+    public Subscription(CreateSubscriptionCommand command) {
         this.planType = command.planType();
         this.userId = new UserId(command.userId());
-        this.subscriptionId = new SubscriptionId(command.subscriptionId());
         this.startDate = command.startDate();
         this.renewalDate = command.renewalDate();
         this.status = command.status();
@@ -51,7 +46,7 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
         this.planType = command.planType();
     }
 
-    public void renewPlan(RenewPaymentCommand command) {
+    public void renewPlan(RenewSubscriptionCommand command) {
         this.renewalDate = command.renewalDate();
     }
 
@@ -59,7 +54,4 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
         return this.userId.userId();
     }
 
-    public Long getSubscriptionId() {
-        return this.subscriptionId.subscriptionId();
-    }
 }

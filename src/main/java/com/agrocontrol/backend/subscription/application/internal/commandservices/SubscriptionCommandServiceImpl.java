@@ -1,27 +1,27 @@
 package com.agrocontrol.backend.subscription.application.internal.commandservices;
 
-import com.agrocontrol.backend.subscription.domain.model.aggregates.Payment;
-import com.agrocontrol.backend.subscription.domain.model.commands.CreatePaymentCommand;
-import com.agrocontrol.backend.subscription.domain.model.commands.RenewPaymentCommand;
+import com.agrocontrol.backend.subscription.domain.model.aggregates.Subscription;
+import com.agrocontrol.backend.subscription.domain.model.commands.CreateSubscriptionCommand;
+import com.agrocontrol.backend.subscription.domain.model.commands.RenewSubscriptionCommand;
 import com.agrocontrol.backend.subscription.domain.model.commands.UpdatePlanTypeCommand;
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.PlanTypes;
-import com.agrocontrol.backend.subscription.domain.services.PaymentCommandService;
-import com.agrocontrol.backend.subscription.infrastructure.persistence.jpa.repositories.PaymentRepository;
+import com.agrocontrol.backend.subscription.domain.services.SubscriptionCommandService;
+import com.agrocontrol.backend.subscription.infrastructure.persistence.jpa.repositories.SubscriptionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class PaymentCommandServiceImpl implements PaymentCommandService {
-    private final PaymentRepository paymentRepository;
+public class SubscriptionCommandServiceImpl implements SubscriptionCommandService {
+    private final SubscriptionRepository subscriptionRepository;
 
-    public PaymentCommandServiceImpl(PaymentRepository paymentRepository) {
-        this.paymentRepository = paymentRepository;
+    public SubscriptionCommandServiceImpl(SubscriptionRepository subscriptionRepository) {
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     @Override
-    public Optional<Payment> handle(CreatePaymentCommand command) {
+    public Optional<Subscription> handle(CreateSubscriptionCommand command) {
         validatePlanType(command.planType().name());
 
         if (command.startDate().isBefore(LocalDate.now())) {
@@ -31,34 +31,34 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         if(command.renewalDate().isBefore(command.startDate())) {
             throw new IllegalArgumentException("Renewal date cannot be before start date");
         }
-        var payment = new Payment(command);
-        var createdPayment = paymentRepository.save(payment);
+        var payment = new Subscription(command);
+        var createdPayment = subscriptionRepository.save(payment);
         return Optional.of(createdPayment);
     }
 
     @Override
-    public Optional<Payment> handle(RenewPaymentCommand command) {
+    public Optional<Subscription> handle(RenewSubscriptionCommand command) {
         if (command.renewalDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Renewal date cannot be in the past");
         }
 
-        Payment payment = this.paymentRepository.findById(command.paymentId())
+        Subscription payment = this.subscriptionRepository.findById(command.paymentId())
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
 
         payment.renewPlan(command);
-        var renewedPayment = paymentRepository.save(payment);
+        var renewedPayment = subscriptionRepository.save(payment);
         return Optional.of(renewedPayment);
     }
 
     @Override
-    public Optional<Payment> handle(UpdatePlanTypeCommand command) {
+    public Optional<Subscription> handle(UpdatePlanTypeCommand command) {
         validatePlanType(command.planType().name());
 
-        Payment payment = this.paymentRepository.findById(command.paymentId())
+        Subscription payment = this.subscriptionRepository.findById(command.paymentId())
                 .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
 
         payment.updatePlanType(command);
-        var updatedPayment = paymentRepository.save(payment);
+        var updatedPayment = subscriptionRepository.save(payment);
         return Optional.of(updatedPayment);
     }
 

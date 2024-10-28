@@ -2,7 +2,7 @@ package com.agrocontrol.backend.subscription.interfaces.rest.resources;
 
 import java.time.LocalDate;
 
-public record RenewPaymentResource(
+public record RenewSubscriptionResource(
         LocalDate renewalDate
 ) {
 }
