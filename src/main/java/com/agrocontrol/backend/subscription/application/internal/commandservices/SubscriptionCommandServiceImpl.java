@@ -24,13 +24,6 @@ public class SubscriptionCommandServiceImpl implements SubscriptionCommandServic
     public Optional<Subscription> handle(CreateSubscriptionCommand command) {
         validatePlanType(command.planType().name());
 
-        if (command.startDate().isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Start date cannot be in the past");
-        }
-
-        if(command.renewalDate().isBefore(command.startDate())) {
-            throw new IllegalArgumentException("Renewal date cannot be before start date");
-        }
         var payment = new Subscription(command);
         var createdPayment = subscriptionRepository.save(payment);
         return Optional.of(createdPayment);

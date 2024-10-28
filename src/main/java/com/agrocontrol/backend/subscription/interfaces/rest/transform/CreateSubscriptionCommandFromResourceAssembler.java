@@ -8,8 +8,6 @@ public class CreateSubscriptionCommandFromResourceAssembler {
         return new CreateSubscriptionCommand(
                 resource.planType(),
                 resource.userId(),
-                resource.startDate(),
-                resource.renewalDate(),
                 resource.status(),
                 resource.cost()
         );
