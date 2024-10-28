@@ -17,10 +17,6 @@ public class SubscriptionQueryServiceImpl implements SubscriptionQueryService {
         this.paymentRepository = paymentRepository;
     }
 
-    @Override
-    public Optional<Subscription> handle(GetPaymentBySubscriptionIdQuery query) {
-        return this.paymentRepository.findBySubscriptionId(query.subscriptionId());
-    }
 
     @Override
     public Optional<Subscription> handle(GetSubscriptionByUserIdQuery query) {

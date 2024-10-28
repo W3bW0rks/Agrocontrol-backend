@@ -27,7 +27,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/v1/subscription", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/subscriptions", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Subscription", description = "Operations related to subscription")
 public class SubscriptionsController {
     private final SubscriptionCommandService paymentCommandService;
@@ -45,13 +45,13 @@ public class SubscriptionsController {
      * @see CreateSubscriptionResource
      * @see SubscriptionResource
      */
-    @Operation(summary = "Create a payment")
+    @Operation(summary = "Create a subscription")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Payment created"),
+        @ApiResponse(responseCode = "201", description = "Subscription created"),
         @ApiResponse(responseCode = "400", description = "Invalid input"),
     })
     @PostMapping
-    public ResponseEntity<SubscriptionResource> createPayment(@RequestBody CreateSubscriptionResource resource) {
+    public ResponseEntity<SubscriptionResource> createSubscription(@RequestBody CreateSubscriptionResource resource) {
         Optional<Subscription> payment = this.paymentCommandService
                 .handle(CreateSubscriptionCommandFromResourceAssembler.toCommandFromResource(resource));
 
@@ -66,13 +66,13 @@ public class SubscriptionsController {
      * @return Payment resource
      * @see SubscriptionResource
      */
-    @Operation(summary = "Renew a payment")
+    @Operation(summary = "Renew a subscription")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Payment renewed"),
+        @ApiResponse(responseCode = "200", description = "Subscription renewed"),
         @ApiResponse(responseCode = "400", description = "Invalid input"),
     })
     @PutMapping("/{id}/renew")
-    public ResponseEntity<SubscriptionResource> renewPayment(@PathVariable Long id, @RequestBody RenewSubscriptionResource resource) {
+    public ResponseEntity<SubscriptionResource> renewSubscription(@PathVariable Long id, @RequestBody RenewSubscriptionResource resource) {
         var command = RenewSubscriptionCommandFromResourceAssembler.toCommandFromResource(resource, id);
         Optional<Subscription> payment = this.paymentCommandService.handle(command);
 
@@ -87,9 +87,9 @@ public class SubscriptionsController {
      * @return Payment resource
      * @see UpdatePlantTypeResource
      */
-    @Operation(summary = "Update payment plan type")
+    @Operation(summary = "Update subscription plan type")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Payment plan type updated"),
+        @ApiResponse(responseCode = "200", description = "Subscription plan type updated"),
         @ApiResponse(responseCode = "400", description = "Invalid input"),
     })
     @PutMapping("/{id}/update-plan-type")
@@ -106,13 +106,13 @@ public class SubscriptionsController {
      * @param id Payment id
      * @return Payment resource
      */
-    @Operation(summary = "Get payment by id")
+    @Operation(summary = "Get subscription by id")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Payment found"),
-        @ApiResponse(responseCode = "404", description = "Payment not found"),
+        @ApiResponse(responseCode = "200", description = "Subscription found"),
+        @ApiResponse(responseCode = "404", description = "Subscription not found"),
     })
     @GetMapping("/{id}")
-    public ResponseEntity<SubscriptionResource> getPaymentById(@PathVariable Long id) {
+    public ResponseEntity<SubscriptionResource> getSubscriptionById(@PathVariable Long id) {
         var query = new GetSubscriptionByIdQuery(id);
         Optional<Subscription> payment = this.paymentQueryService.handle(query);
 
@@ -120,13 +120,13 @@ public class SubscriptionsController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Get payment by user id")
+    @Operation(summary = "Get subscription by user id")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Payment found"),
-        @ApiResponse(responseCode = "404", description = "Payment not found"),
+        @ApiResponse(responseCode = "200", description = "Subscription found"),
+        @ApiResponse(responseCode = "404", description = "Subscription not found"),
     })
     @GetMapping("/user/{userId}")
-    public ResponseEntity<SubscriptionResource> getPaymentByUserId(@PathVariable Long userId) {
+    public ResponseEntity<SubscriptionResource> getSubscriptionByUserId(@PathVariable Long userId) {
         var paymentUserId = new UserId(userId);
         var query = new GetSubscriptionByUserIdQuery(paymentUserId);
         Optional<Subscription> payment = this.paymentQueryService.handle(query);

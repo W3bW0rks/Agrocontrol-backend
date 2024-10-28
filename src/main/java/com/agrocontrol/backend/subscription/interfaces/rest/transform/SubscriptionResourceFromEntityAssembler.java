@@ -9,7 +9,6 @@ public class SubscriptionResourceFromEntityAssembler {
                 entity.getId(),
                 entity.getPlanType().name(),
                 entity.getUserId(),
-                entity.getSubscriptionId(),
                 entity.getStartDate(),
                 entity.getRenewalDate(),
                 entity.getStatus(),
