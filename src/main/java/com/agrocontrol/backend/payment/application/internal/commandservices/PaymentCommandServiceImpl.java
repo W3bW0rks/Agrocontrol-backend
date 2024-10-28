@@ -21,6 +21,16 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         if(command.cardNumber() == null || command.cardNumber().length() != 16){
             throw new IllegalArgumentException("Card number must be 16 digits");
         }
+        if(command.cvv() == null || command.cvv().length() != 3){
+            throw new IllegalArgumentException("CVV must be 3 digits");
+        }
+        if(command.cardHolderName() == null || command.cardHolderName().length() < 3){
+            throw new IllegalArgumentException("Card holder name must be at least 3 characters");
+        }
+        if(command.ExpireDate() == null || command.ExpireDate().length() != 5){
+            throw new IllegalArgumentException("Expire date must be in the format MM/YY");
+        }
+
         var payment = new Payment(command);
         var createdPayment = paymentRepository.save(payment);
         return Optional.of(createdPayment);
