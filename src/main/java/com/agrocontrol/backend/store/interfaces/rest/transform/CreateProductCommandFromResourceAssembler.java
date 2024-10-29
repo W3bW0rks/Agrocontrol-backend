@@ -7,6 +7,6 @@ public class CreateProductCommandFromResourceAssembler {
 
     public static CreateProductCommand toCommandFromResource(CreateProductResource resource) {
         return new CreateProductCommand(resource.userId(), resource.name(), resource.quantityPerUnit(),
-                resource.unitPrice(), resource.quantity());
+                resource.unitPrice(), resource.quantity(), resource.photoUrl());
     }
 }

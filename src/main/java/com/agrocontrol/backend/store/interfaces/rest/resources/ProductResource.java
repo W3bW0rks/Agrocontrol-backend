@@ -6,6 +6,7 @@ public record ProductResource(
         String name,
         String quantityPerUnit,
         double unitPrice,
-        Integer quantity
+        Integer quantity,
+        String photoUrl
 ) {
 }

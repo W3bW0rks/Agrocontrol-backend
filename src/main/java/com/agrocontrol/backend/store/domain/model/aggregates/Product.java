@@ -1,10 +1,7 @@
 package com.agrocontrol.backend.store.domain.model.aggregates;
 
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;
-import com.agrocontrol.backend.store.domain.model.commands.DecreaseQuantityCommand;
-import com.agrocontrol.backend.store.domain.model.commands.IncreaseQuantityCommand;
-import com.agrocontrol.backend.store.domain.model.commands.UpdateProductOwnerCommand;
+import com.agrocontrol.backend.store.domain.model.commands.*;
 import com.agrocontrol.backend.store.domain.model.valueobjects.UserId;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -26,6 +23,8 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
     private double unitPrice;
     @NotNull
     private Integer quantity;
+    @NotNull
+    private String photoUrl;
 
     protected Product() {}
 
@@ -35,30 +34,39 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
         this.quantityPerUnit = command.quantityPerUnit();
         this.unitPrice = command.unitPrice();
         this.quantity = command.quantity();
+        this.photoUrl = command.photoUrl();
     }
 
     public void updateProductOwner(UpdateProductOwnerCommand command) {
         this.userId = new UserId(command.userId());
     }
 
-    public void increaseQuantity(IncreaseQuantityCommand command) {
-        this.quantity += command.quantity();
+    public void changeQuantity(ChangeQuantityOfProductCommand command) {
+        if (command.action().contains("increase")) {
+            increaseQuantity(command.quantity());
+        } else {
+            decreaseQuantity(command.quantity());
+        }
     }
 
-    public void decreaseQuantity(DecreaseQuantityCommand command) {
+    private void increaseQuantity(Integer newQuantity) {
+        this.quantity += newQuantity;
+    }
+
+    private void decreaseQuantity(Integer newQuantity) {
 
         if (this.quantity == 0)
             throw new IllegalArgumentException("Product is out of stock");
 
-        if (this.quantity - command.quantity() <= 0) {
+        if (this.quantity - newQuantity <= 0) {
 
-            var exceededQuantity = command.quantity() - this.quantity;
+            var exceededQuantity = newQuantity - this.quantity;
             this.quantity = 0;
             
             throw new IllegalArgumentException("Product is out of stock. Exceeded quantity: " + exceededQuantity);
         }
 
-        this.quantity -= command.quantity();
+        this.quantity -= newQuantity;
     }
 
     public Long getUserId() {

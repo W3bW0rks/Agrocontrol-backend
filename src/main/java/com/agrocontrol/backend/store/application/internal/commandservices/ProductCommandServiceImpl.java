@@ -1,9 +1,8 @@
 package com.agrocontrol.backend.store.application.internal.commandservices;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
+import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
 import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;
-import com.agrocontrol.backend.store.domain.model.commands.DecreaseQuantityCommand;
-import com.agrocontrol.backend.store.domain.model.commands.IncreaseQuantityCommand;
 import com.agrocontrol.backend.store.domain.model.commands.UpdateProductOwnerCommand;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
 import com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositories.ProductRepository;
@@ -33,36 +32,18 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     }
 
     @Override
-    public Optional<Product> handle(DecreaseQuantityCommand command) {
+    public Optional<Product> handle(ChangeQuantityOfProductCommand command) {
 
-        if (command.quantity() <= 0)
-            throw new IllegalArgumentException("Quantity must be greater than 0");
+            var product = productRepository.findById(command.productId())
+                    .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
-        var product = productRepository.findById(command.productId())
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+            product.changeQuantity(command);
 
-        product.decreaseQuantity(command);
+            var updatedProduct = productRepository.save(product);
 
-        var updatedProduct = productRepository.save(product);
-
-        return Optional.of(updatedProduct);
+            return Optional.of(updatedProduct);
     }
 
-    @Override
-    public Optional<Product> handle(IncreaseQuantityCommand command) {
-
-        if (command.quantity() <= 0)
-            throw new IllegalArgumentException("Quantity must be greater than 0");
-
-        var product = productRepository.findById(command.productId())
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-
-        product.increaseQuantity(command);
-
-        var updatedProduct = productRepository.save(product);
-
-        return Optional.of(updatedProduct);
-    }
 
     @Override
     public Optional<Product> handle(UpdateProductOwnerCommand command) {
