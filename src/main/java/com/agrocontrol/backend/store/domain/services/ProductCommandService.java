@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ProductCommandService {
     Optional<Product> handle(CreateProductCommand command);
-    Optional<Product> handle(ChangeQuantityOfProductCommand command);
+    Optional<Product> handle(UpdateProductCommand command);
     Optional<Product> handle(UpdateProductOwnerCommand command);
+    Optional<Product> handle(ChangeQuantityOfProductCommand command);
 }

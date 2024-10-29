@@ -37,6 +37,14 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
         this.photoUrl = command.photoUrl();
     }
 
+    public void updateProduct(UpdateProductCommand command) {
+        this.name = command.name();
+        this.quantityPerUnit = command.quantityPerUnit();
+        this.unitPrice = command.unitPrice();
+        this.quantity = command.quantity();
+        this.photoUrl = command.photoUrl();
+    }
+
     public void updateProductOwner(UpdateProductOwnerCommand command) {
         this.userId = new UserId(command.userId());
     }

@@ -2,6 +2,7 @@ package com.agrocontrol.backend.store.application.internal.commandservices;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
+import com.agrocontrol.backend.store.domain.model.commands.UpdateProductCommand;
 import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;
 import com.agrocontrol.backend.store.domain.model.commands.UpdateProductOwnerCommand;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
@@ -29,6 +30,19 @@ public class ProductCommandServiceImpl implements ProductCommandService {
        var createdProduct = productRepository.save(product);
 
        return Optional.of(createdProduct);
+    }
+
+    @Override
+    public Optional<Product> handle(UpdateProductCommand command) {
+
+            var product = productRepository.findById(command.productId())
+                    .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+            product.updateProduct(command);
+
+            var updatedProduct = productRepository.save(product);
+
+            return Optional.of(updatedProduct);
     }
 
     @Override

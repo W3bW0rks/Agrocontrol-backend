@@ -50,6 +50,20 @@ public class ProductsController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @Operation(summary = "Update a product")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResource> updateProduct(@PathVariable Long id, @RequestBody UpdateProductResource resource) {
+        Optional<Product> product = this.productCommandService
+                .handle(UpdateProductCommandFromResourceAssembler.toCommandFromResource(resource, id));
+
+        return product.map(source -> new ResponseEntity<>(ProductResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
     @Operation(summary = "Update quantity of a product")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product quantity updated"),

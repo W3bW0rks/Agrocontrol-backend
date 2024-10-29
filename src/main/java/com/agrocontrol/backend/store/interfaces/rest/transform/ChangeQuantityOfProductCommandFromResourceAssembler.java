@@ -1,6 +1,7 @@
 package com.agrocontrol.backend.store.interfaces.rest.transform;
 
 import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
+import com.agrocontrol.backend.store.domain.model.commands.UpdateProductCommand;
 import com.agrocontrol.backend.store.interfaces.rest.resources.ChangeQuantityOfProductResource;
 
 public class ChangeQuantityOfProductCommandFromResourceAssembler {
