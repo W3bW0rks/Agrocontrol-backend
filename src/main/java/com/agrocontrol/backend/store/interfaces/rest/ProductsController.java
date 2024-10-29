@@ -23,6 +23,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/v1/products", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Products", description = "Operations related to products")
 public class ProductsController {
@@ -49,29 +50,29 @@ public class ProductsController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @Operation(summary = "Decrease quantity of a product")
+    @Operation(summary = "Update a product")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Product quantity decreased"),
+            @ApiResponse(responseCode = "200", description = "Product updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
     })
-    @PutMapping("/decrease-quantity")
-    public ResponseEntity<ProductResource> decreaseQuantity(@RequestBody DecreaseQuantityResource resource) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResource> updateProduct(@PathVariable Long id, @RequestBody UpdateProductResource resource) {
         Optional<Product> product = this.productCommandService
-                .handle(DecreaseQuantityCommandFromResourceAssembler.toCommandFromResource(resource));
+                .handle(UpdateProductCommandFromResourceAssembler.toCommandFromResource(resource, id));
 
         return product.map(source -> new ResponseEntity<>(ProductResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @Operation(summary = "Increase quantity of a product")
+    @Operation(summary = "Update quantity of a product")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Product quantity increased"),
+            @ApiResponse(responseCode = "200", description = "Product quantity updated"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
     })
-    @PutMapping("/increase-quantity")
-    public ResponseEntity<ProductResource> increaseQuantity(@RequestBody IncreaseQuantityResource resource) {
+    @PutMapping("/{id}/update-quantity")
+    public ResponseEntity<ProductResource> updateProductQuantity(@PathVariable Long id, @RequestBody ChangeQuantityOfProductResource resource) {
         Optional<Product> product = this.productCommandService
-                .handle(IncreaseQuantityCommandFromResourceAssembler.toCommandFromResource(resource));
+                .handle(ChangeQuantityOfProductCommandFromResourceAssembler.toCommandFromResource(resource, id));
 
         return product.map(source -> new ResponseEntity<>(ProductResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
@@ -127,10 +128,10 @@ public class ProductsController {
             @ApiResponse(responseCode = "404", description = "Product not found"),
     })
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ProductResource>> getProductByUserId(@PathVariable Long id) {
+    public ResponseEntity<List<ProductResource>> getProductByUserId(@PathVariable Long userId) {
 
-        var userId = new UserId(id);
-        var query = new GetProductByUserIdQuery(userId);
+        var id = new UserId(userId);
+        var query = new GetProductByUserIdQuery(id);
 
         List<Product> products = this.productQueryService.handle(query);
 

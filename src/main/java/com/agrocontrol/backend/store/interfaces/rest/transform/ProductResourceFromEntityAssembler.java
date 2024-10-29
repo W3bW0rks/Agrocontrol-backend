@@ -7,6 +7,6 @@ public class ProductResourceFromEntityAssembler {
 
     public static ProductResource toResourceFromEntity(Product product) {
         return new ProductResource(product.getId(), product.getUserId(), product.getName(), product.getQuantityPerUnit(),
-                product.getUnitPrice(), product.getQuantity());
+                product.getUnitPrice(), product.getQuantity(), product.getPhotoUrl());
     }
 }

@@ -1,8 +1,6 @@
 package com.agrocontrol.backend.store.interfaces.rest.resources;
 
-public record ProductResource(
-        Long id,
-        Long userId,
+public record UpdateProductResource(
         String name,
         String quantityPerUnit,
         double unitPrice,
