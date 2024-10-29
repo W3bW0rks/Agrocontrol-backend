@@ -36,8 +36,8 @@ public class Subscription extends AuditableAbstractAggregateRoot<Subscription> {
     public Subscription(CreateSubscriptionCommand command) {
         this.planType = command.planType();
         this.userId = new UserId(command.userId());
-        this.startDate = command.startDate();
-        this.renewalDate = command.renewalDate();
+        this.startDate = LocalDate.now();
+        this.renewalDate = LocalDate.now().plusMonths(1);
         this.status = command.status();
         this.cost = command.cost();
     }
