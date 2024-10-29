@@ -113,8 +113,8 @@ public class FieldsController {
             @ApiResponse(responseCode = "400",description = "Fields not found")
     })
     @GetMapping("/{producerId}")
-    public ResponseEntity<List<FieldResource>> getFieldByProducerId(@PathVariable Long id){
-        var query= new GetFieldsByProducerIdQuery(id);
+    public ResponseEntity<List<FieldResource>> getFieldByProducerId(@PathVariable Long producerId){
+        var query= new GetFieldsByProducerIdQuery(producerId);
         List<Field> fields = this.fieldQueryService.handle(query);
         if(fields.isEmpty()){
             return ResponseEntity.badRequest().build();
