@@ -75,7 +75,7 @@ public class FieldsController {
             @ApiResponse(responseCode = "400", description = "Invalid Input")
     })
     @PutMapping("/{id}/update-field")
-    public ResponseEntity<FieldResource> updateField(@PathVariable Long id,@RequestBody UpdateFieldResource resource) {
+    public ResponseEntity<FieldResource> updateField(@PathVariable Long id, @RequestBody UpdateFieldResource resource) {
         var command = UpdateFieldCommandFromResourceAssembler.toCommandFromResource(resource,id);
         Optional<Field> field = this.fieldCommandService.handle(command);
         return field.map(source-> new ResponseEntity<>(FieldResourceFromEntityAssembler.toResourceFromEntity(source),CREATED))
@@ -92,9 +92,9 @@ public class FieldsController {
             @ApiResponse(responseCode = "201",description = "Fields found"),
             @ApiResponse(responseCode = "400",description = "Fields not found")
     })
-    @GetMapping("/{id}")
-    public ResponseEntity<FieldResource> getFieldById(@PathVariable Long id){
-        var query = new GetFieldByIdQuery(id);
+    @GetMapping("/{fieldId}")
+    public ResponseEntity<FieldResource> getFieldById(@PathVariable Long fieldId){
+        var query = new GetFieldByIdQuery(fieldId);
         Optional<Field> field = this.fieldQueryService.handle(query);
         return field.map(source->new ResponseEntity<>(FieldResourceFromEntityAssembler.toResourceFromEntity(source),CREATED))
                 .orElseGet(()->ResponseEntity.badRequest().build());
@@ -112,9 +112,9 @@ public class FieldsController {
             @ApiResponse(responseCode = "201", description = "Fields found"),
             @ApiResponse(responseCode = "400",description = "Fields not found")
     })
-    @GetMapping("/{producerId}")
-    public ResponseEntity<List<FieldResource>> getFieldByProducerId(@PathVariable Long producerId){
-        var query= new GetFieldsByProducerIdQuery(producerId);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<FieldResource>> getFieldByUserId(@PathVariable Long userId){
+        var query= new GetFieldsByProducerIdQuery(userId);
         List<Field> fields = this.fieldQueryService.handle(query);
         if(fields.isEmpty()){
             return ResponseEntity.badRequest().build();
@@ -134,7 +134,7 @@ public class FieldsController {
      */
     @Operation(summary = "Delete field by a field ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201",description = "Field deleted"),
+            @ApiResponse(responseCode = "200",description = "Field deleted"),
             @ApiResponse(responseCode = "400",description = "Field not found")
     })
     @DeleteMapping("/{id}")
