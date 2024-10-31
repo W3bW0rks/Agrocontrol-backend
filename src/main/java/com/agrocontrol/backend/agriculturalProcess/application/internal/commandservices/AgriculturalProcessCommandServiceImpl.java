@@ -25,33 +25,33 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
     }
 
     @Override
-    public Optional<AgriculturalProcess> handle(AddSeedingToProcessCommand command) {
+    public Optional<AgriculturalActivity> handle(AddSeedingToProcessCommand command) {
         AgriculturalProcess agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
         agriculturalProcess.addActivity(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
-        return Optional.of(updatedAgriculturalProcess);
+        return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.agriculturalProcessId()));
     }
 
     @Override
-    public Optional<AgriculturalProcess> handle(AddIrrigationToProcessCommand command) {
+    public Optional<AgriculturalActivity> handle(AddIrrigationToProcessCommand command) {
         AgriculturalProcess agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
         agriculturalProcess.addActivity(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
-        return Optional.of(updatedAgriculturalProcess);
+        return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.agriculturalProcessId()));
     }
 
     @Override
-    public Optional<AgriculturalProcess> handle(AddCropTreatmentToProcessCommand command) {
+    public Optional<AgriculturalActivity> handle(AddCropTreatmentToProcessCommand command) {
         AgriculturalProcess agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
         agriculturalProcess.addActivity(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
-        return Optional.of(updatedAgriculturalProcess);
+        return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.agriculturalProcessId()));
     }
 
     @Override
@@ -88,12 +88,12 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
     }
 
     @Override
-    public Optional<AgriculturalProcess> handle(AddHarvestToProcessCommand command) {
+    public Optional<AgriculturalActivity> handle(AddHarvestToProcessCommand command) {
         var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
         agriculturalProcess.addActivity(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
-        return Optional.of(updatedAgriculturalProcess);
+        return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.agriculturalProcessId()));
     }
 }

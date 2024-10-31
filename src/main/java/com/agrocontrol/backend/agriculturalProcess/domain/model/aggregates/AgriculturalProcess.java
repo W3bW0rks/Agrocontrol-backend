@@ -27,7 +27,7 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
     private LocalDate endDate;
 
     @Getter
-    private boolean isFinished;
+    private boolean finished;
 
     @Embedded
     private AgriculturalActivityManager activityManager;
@@ -38,13 +38,13 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
         this.fieldId = command.fieldId();
         this.startDate = LocalDate.now();
         this.endDate = null;
-        this.isFinished = false;
+        this.finished = false;
         this.activityManager = new AgriculturalActivityManager();
     }
 
     public void finish() {
         this.endDate = LocalDate.now();
-        this.isFinished = true;
+        this.finished = true;
     }
 
     public void addActivity(AddSeedingToProcessCommand command) {

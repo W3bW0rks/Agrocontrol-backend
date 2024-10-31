@@ -8,7 +8,6 @@ public record AgriculturalProcessResource(
         Long fieldId,
         LocalDate startDate,
         LocalDate endDate,
-        boolean isFinished,
-        List<AgriculturalActivityResource> activities
+        boolean isFinished
 ) {
 }

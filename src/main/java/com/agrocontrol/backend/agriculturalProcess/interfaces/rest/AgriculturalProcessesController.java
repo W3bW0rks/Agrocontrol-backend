@@ -5,10 +5,7 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddCrop
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddHarvestToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.*;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;
@@ -69,7 +66,7 @@ public class AgriculturalProcessesController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
     })
     @PostMapping("/add-activity")
-    public ResponseEntity<AgriculturalProcessResource> addActivityToAgriculturalProcess(
+    public ResponseEntity<AgriculturalActivityResource> addActivityToAgriculturalProcess(
             @RequestParam Long agriculturalProcessId,
             @RequestParam String date,
             @RequestParam(required = false) Integer hoursIrrigated,
@@ -92,42 +89,42 @@ public class AgriculturalProcessesController {
         }
     }
 
-    private ResponseEntity<AgriculturalProcessResource> addHarvestToProcess(String date, double quantityInKg, double pricePerKg, Long agriculturalProcessId) {
+    private ResponseEntity<AgriculturalActivityResource> addHarvestToProcess(String date, double quantityInKg, double pricePerKg, Long agriculturalProcessId) {
         var command = new AddHarvestToProcessCommand(date, quantityInKg, pricePerKg, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
         return agriculturalProcess.map(source ->
-                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    private ResponseEntity<AgriculturalProcessResource> addCropTreatmentToProcess(String date, String treatmentType, Long agriculturalProcessId) {
+    private ResponseEntity<AgriculturalActivityResource> addCropTreatmentToProcess(String date, String treatmentType, Long agriculturalProcessId) {
         var command = new AddCropTreatmentToProcessCommand(date, treatmentType, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
         return agriculturalProcess.map(source ->
-                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    private ResponseEntity<AgriculturalProcessResource> addIrrigationToProcess(String date, Integer hoursIrrigated, Long agriculturalProcessId) {
+    private ResponseEntity<AgriculturalActivityResource> addIrrigationToProcess(String date, Integer hoursIrrigated, Long agriculturalProcessId) {
         var command = new AddIrrigationToProcessCommand(date, hoursIrrigated, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
         return agriculturalProcess.map(source ->
-                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    private ResponseEntity<AgriculturalProcessResource> addSeedingToProcess(String date, String plantType, Integer quantityPlanted, Long agriculturalProcessId) {
+    private ResponseEntity<AgriculturalActivityResource> addSeedingToProcess(String date, String plantType, Integer quantityPlanted, Long agriculturalProcessId) {
         var command = new AddSeedingToProcessCommand(date, plantType, quantityPlanted, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
         return agriculturalProcess.map(source ->
-                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                        new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
@@ -150,6 +147,26 @@ public class AgriculturalProcessesController {
     }
 
     @Operation(
+            summary = "Find unfinished agricultural process by field id",
+            description = "Find unfinished agricultural processes by field id"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Unfinished agricultural processes found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "No unfinished agricultural processes found")
+    })
+    @GetMapping("/field/{fieldId}/unfinished")
+    public ResponseEntity<AgriculturalProcessResource> findUnfinishedAgriculturalProcessByFieldId(@PathVariable Long fieldId) {
+        var query = new GetUnfinishedAgriculturalProcessByFieldIdQuery(fieldId);
+        var agriculturalProcess = this.queryService.handle(query);
+
+        return agriculturalProcess.map(source ->
+                        new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
+                                HttpStatus.CREATED))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+
+    @Operation(
             summary = "Finish an agricultural process",
             description = "Finish an agricultural process with the provided parameters"
     )
@@ -157,9 +174,9 @@ public class AgriculturalProcessesController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Agricultural process finished"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
     })
-    @PutMapping("/finish")
-    public ResponseEntity<AgriculturalProcessResource> finishAgriculturalProcess(@RequestBody FinishAgriculturalProcessResource resource) {
-        var agriculturalProcess = this.commandService.handle(FinishAgriculturalProcessCommandFromResourceAssembler.toCommandFromResource(resource));
+    @PutMapping("/finish/{agriculturalProcessId}")
+    public ResponseEntity<AgriculturalProcessResource> finishAgriculturalProcess(@PathVariable Long agriculturalProcessId) {
+        var agriculturalProcess = this.commandService.handle(FinishAgriculturalProcessCommandFromResourceAssembler.toCommandFromResource(agriculturalProcessId));
         return agriculturalProcess.map(source ->
                         new ResponseEntity<>(AgriculturalProcessResourceFromEntityAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))

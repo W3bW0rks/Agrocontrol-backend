@@ -26,7 +26,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value = "/api/v1/workers",produces = APPLICATION_JSON_VALUE)
-@Tag(name = "workers",description = "Operations related to workers")
+@Tag(name = "Workers",description = "Operations related to workers")
 public class WorkersController {
     private final WorkerCommandService workerCommandService;
     private final WorkerQueryService workerQueryService;

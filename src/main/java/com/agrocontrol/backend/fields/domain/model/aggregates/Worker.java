@@ -13,11 +13,9 @@ import lombok.Getter;
 public class Worker extends AuditableAbstractAggregateRoot<Worker> {
     @Embedded
     ProducerId producerId;
-    @NotNull
-    String fullName;
 
     @NotNull
-    String phone;
+    String fullName;
 
     @NotNull
     String documentNumber;

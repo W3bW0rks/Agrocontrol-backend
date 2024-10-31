@@ -1,10 +1,7 @@
 package com.agrocontrol.backend.agriculturalProcess.application.internal.queryservices;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByFieldIdQuery;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetAgriculturalProcessByIdQuery;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.*;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessQueryService;
 import com.agrocontrol.backend.agriculturalProcess.infrastructure.persistence.jpa.repositories.AgriculturalProcessRepository;
@@ -29,6 +26,11 @@ public class AgriculturalProcessQueryServiceImpl implements AgriculturalProcessQ
     @Override
     public List<AgriculturalProcess> handle(GetAgriculturalProcessByFieldIdQuery query) {
         return this.agriculturalProcessRepository.findByFieldId(query.fieldId());
+    }
+
+    @Override
+    public Optional<AgriculturalProcess> handle(GetUnfinishedAgriculturalProcessByFieldIdQuery query) {
+        return this.agriculturalProcessRepository.findByFinishedIsFalseAndFieldId(query.fieldId());
     }
 
     @Override
