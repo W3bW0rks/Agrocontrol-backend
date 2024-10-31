@@ -96,4 +96,8 @@ public class AgriculturalProcess extends AuditableAbstractAggregateRoot<Agricult
     public AgriculturalActivity getActivityById(Long activityId) {
         return activityManager.getActivityById(activityId);
     }
+
+    public AgriculturalActivity getLastActivityId() {
+        return activityManager.getLatestActivityId();
+    }
 }

@@ -123,4 +123,8 @@ public class AgriculturalActivityManager {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Activity not found"));
     }
+
+    public AgriculturalActivity getLatestActivityId() {
+        return activities.getLast();
+    }
 }
