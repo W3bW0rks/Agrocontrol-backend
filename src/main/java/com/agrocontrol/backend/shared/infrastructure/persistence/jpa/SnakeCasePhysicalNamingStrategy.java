@@ -3,6 +3,7 @@ package com.agrocontrol.backend.shared.infrastructure.persistence.jpa;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
+
 import static io.github.encryptorcode.pluralize.Pluralize.pluralize;
 /**
  * SnakeCase Physical NamingStrategy
