@@ -7,7 +7,7 @@ public class FinanceResourceFromEntityAssembler {
     public static FinanceResource toResourceFromEntity(Finance finance) {
         return new FinanceResource(
                 finance.getId(),
-                finance.getUserId(),
+                finance.getAgriculturalProcessId(),
                 finance.getDate(),
                 finance.getType(),
                 finance.getValue()

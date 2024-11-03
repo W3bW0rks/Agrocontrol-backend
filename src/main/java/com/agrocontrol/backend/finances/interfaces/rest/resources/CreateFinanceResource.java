@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.finances.interfaces.rest.resources;
 
 public record CreateFinanceResource(
-        Long userId,
+        Long agriculturalProcessId,
         String type,
         double value
 ) {

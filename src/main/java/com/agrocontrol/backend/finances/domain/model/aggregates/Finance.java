@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.finances.domain.model.aggregates;
 
 import com.agrocontrol.backend.finances.domain.model.commands.CreateFinanceCommand;
-import com.agrocontrol.backend.finances.domain.model.valueobjects.UserId;
+import com.agrocontrol.backend.finances.domain.model.valueobjects.AgriculturalProcessId;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Finance extends AuditableAbstractAggregateRoot<Finance> {
 
     @Embedded
-    private UserId userId;
+    private AgriculturalProcessId agriculturalProcessId;
 
     @NotNull
     private LocalDate date;
@@ -29,13 +29,13 @@ public class Finance extends AuditableAbstractAggregateRoot<Finance> {
     protected Finance() {}
 
     public Finance(CreateFinanceCommand command) {
-        this.userId = new UserId(command.userId());
+        this.agriculturalProcessId = new AgriculturalProcessId(command.agriculturalProcessId());
         this.date = LocalDate.now();
         this.type = command.type();
         this.value = command.value();
     }
 
-    public Long getUserId() {
-        return userId.userId();
+    public Long getAgriculturalProcessId() {
+        return agriculturalProcessId.agriculturalProcessId();
     }
 }

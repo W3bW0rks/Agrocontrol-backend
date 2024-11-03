@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record FinanceResource(
         Long id,
-        Long userId,
+        Long agriculturalProcessId,
         LocalDate date,
         String type,
         double value

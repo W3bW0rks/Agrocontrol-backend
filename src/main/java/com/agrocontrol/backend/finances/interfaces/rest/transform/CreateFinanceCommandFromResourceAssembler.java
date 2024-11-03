@@ -6,7 +6,7 @@ import com.agrocontrol.backend.finances.interfaces.rest.resources.CreateFinanceR
 public class CreateFinanceCommandFromResourceAssembler {
     public static CreateFinanceCommand toCommandFromResource(CreateFinanceResource resource) {
         return new CreateFinanceCommand(
-                resource.userId(),
+                resource.agriculturalProcessId(),
                 resource.type(),
                 resource.value()
         );

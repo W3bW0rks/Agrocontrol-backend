@@ -1,8 +1,8 @@
 package com.agrocontrol.backend.finances.interfaces.rest;
 
 import com.agrocontrol.backend.finances.domain.model.aggregates.Finance;
-import com.agrocontrol.backend.finances.domain.model.queries.GetFinancesByUserIdQuery;
-import com.agrocontrol.backend.finances.domain.model.valueobjects.UserId;
+import com.agrocontrol.backend.finances.domain.model.queries.GetFinancesByAgriculturalProcessIdQuery;
+import com.agrocontrol.backend.finances.domain.model.valueobjects.AgriculturalProcessId;
 import com.agrocontrol.backend.finances.domain.services.FinanceCommandService;
 import com.agrocontrol.backend.finances.domain.services.FinanceQueryService;
 import com.agrocontrol.backend.finances.interfaces.rest.resources.CreateFinanceResource;
@@ -48,15 +48,17 @@ public class FinancesController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @Operation(summary = "Get a list of finance by user id", description = "Get a list of finance by user id")
+    @Operation(
+            summary = "Get a list of finance by agricultural process id",
+            description = "Get a list of finance by agricultural process id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Finance found"),
             @ApiResponse(responseCode = "404", description = "Finance not found")
     })
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<FinanceResource>> getFinancesByUserId(@PathVariable Long userId) {
-        var id = new UserId(userId);
-        var query = new GetFinancesByUserIdQuery(id);
+    @GetMapping("/{agriculturalProcessId}")
+    public ResponseEntity<List<FinanceResource>> getFinancesByAgriculturalProcessId(@PathVariable Long agriculturalProcessId) {
+        var id = new AgriculturalProcessId(agriculturalProcessId);
+        var query = new GetFinancesByAgriculturalProcessIdQuery(id);
 
         List<Finance> finances = this.financeQueryService.handle(query);
 
