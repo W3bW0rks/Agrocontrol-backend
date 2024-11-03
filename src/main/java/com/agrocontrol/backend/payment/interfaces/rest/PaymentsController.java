@@ -53,7 +53,8 @@ public class PaymentsController {
 
     }
 
-@Operation(summary = "Get payment by id")
+    /*
+    @Operation(summary = "Get payment by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Payment found"),
             @ApiResponse(responseCode = "404", description = "Payment not found"),
@@ -65,7 +66,8 @@ public class PaymentsController {
 
         return payment.map(source -> new ResponseEntity<>(PaymentResourceFromEntityAssembler.toResourceFromEntity(source), CREATED)).orElseGet(()
                 -> ResponseEntity.notFound().build());
-}
+    }*/
+
     @Operation (summary = "Get payment by subscription id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Payment found"),

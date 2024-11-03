@@ -69,6 +69,7 @@ public class WorkersController {
         return new ResponseEntity<>(workerResources,CREATED);
     }
 
+    /*
     @Operation(summary = "Delete a Worker")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",description = "Worker Deleted"),
@@ -80,6 +81,6 @@ public class WorkersController {
         this.workerCommandService.handle(command);
         return ResponseEntity.ok().build();
 
-    }
+    } */
 
 }

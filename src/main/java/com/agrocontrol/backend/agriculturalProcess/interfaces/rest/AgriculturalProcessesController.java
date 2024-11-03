@@ -200,6 +200,7 @@ public class AgriculturalProcessesController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    /*
     @Operation(
             summary = "Get an agricultural process by its id",
             description = "Get an agricultural process by its id"
@@ -219,6 +220,7 @@ public class AgriculturalProcessesController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+
     @Operation(
             summary = "Get an agricultural process by its field id",
             description = "Get an agricultural process by its field id"
@@ -237,7 +239,7 @@ public class AgriculturalProcessesController {
         List<AgriculturalProcessResource> resources = agriculturalProcesses.stream().map(AgriculturalProcessResourceFromEntityAssembler::toResourceFromEntity).toList();
         return ResponseEntity.ok(resources);
 
-    }
+    }*/
 
     @Operation(
             summary = "Get activities by activity type and agricultural process id",

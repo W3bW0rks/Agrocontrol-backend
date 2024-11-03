@@ -65,7 +65,7 @@ public class SubscriptionsController {
      * @param resource Payment resource
      * @return Payment resource
      * @see SubscriptionResource
-     */
+     *//*
     @Operation(summary = "Renew a subscription")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Subscription renewed"),
@@ -80,13 +80,13 @@ public class SubscriptionsController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    /**
+    *//**
      * Update payment plan type
      * @param id Payment id
      * @param resource Payment resource
      * @return Payment resource
      * @see UpdatePlantTypeResource
-     */
+     *//*
     @Operation(summary = "Update subscription plan type")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Subscription plan type updated"),
@@ -101,11 +101,12 @@ public class SubscriptionsController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    /**
+
+    *//**
      * Get payment by id
      * @param id Payment id
      * @return Payment resource
-     */
+     *//*
     @Operation(summary = "Get subscription by id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Subscription found"),
@@ -118,8 +119,13 @@ public class SubscriptionsController {
 
         return payment.map(source -> new ResponseEntity<>(SubscriptionResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
                 .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+    }*/
 
+    /**
+     * Get subscription by user id
+     * @param userId User id
+     * @return Subscription resource
+     */
     @Operation(summary = "Get subscription by user id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Subscription found"),

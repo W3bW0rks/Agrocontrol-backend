@@ -30,7 +30,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping(value = "/api/v1/fields",produces= APPLICATION_JSON_VALUE)
-@Tag(name="fields",description = "Operations related to fields")
+@Tag(name="Fields",description = "Operations related to fields")
 public class FieldsController {
     private final FieldCommandService fieldCommandService;
     private final FieldQueryService fieldQueryService;
@@ -81,12 +81,14 @@ public class FieldsController {
         return field.map(source-> new ResponseEntity<>(FieldResourceFromEntityAssembler.toResourceFromEntity(source),CREATED))
                 .orElseGet(()->ResponseEntity.badRequest().build());
     }
+
+    /*
     /**
      * Get a field by its ID.
      *
      * @param id the ID of the field to retrieve
      * @return a response entity containing the field resource or a bad request status
-     */
+     *//*
     @Operation(summary = "Get field by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",description = "Fields found"),
@@ -98,12 +100,13 @@ public class FieldsController {
         Optional<Field> field = this.fieldQueryService.handle(query);
         return field.map(source->new ResponseEntity<>(FieldResourceFromEntityAssembler.toResourceFromEntity(source),CREATED))
                 .orElseGet(()->ResponseEntity.badRequest().build());
-    }
+    }*/
+
 
     /**
      * Get all fields associated with a producer.
      *
-     * @param id the ID of the producer
+     * @param userId the ID of the producer
      * @return a response entity containing a list of field resources or a bad request status
      */
 

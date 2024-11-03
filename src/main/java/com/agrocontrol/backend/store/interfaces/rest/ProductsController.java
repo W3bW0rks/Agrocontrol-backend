@@ -92,6 +92,7 @@ public class ProductsController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    /*
     @Operation(summary = "Get product by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product found"),
@@ -120,7 +121,7 @@ public class ProductsController {
 
         return product.map(source -> new ResponseEntity<>(ProductResourceFromEntityAssembler.toResourceFromEntity(source), CREATED))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
-    }
+    } */
 
     @Operation(summary = "Get product by user id")
     @ApiResponses(value = {
