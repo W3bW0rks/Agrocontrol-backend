@@ -37,7 +37,7 @@ public class AgriculturalActivityManager {
         if (seedingExists) {
             throw new IllegalArgumentException("Seeding activity already exists");
         }
-        Seeding seeding = new Seeding(agriculturalProcess, activityType, command.plantType(), command.date(), command.quantityPlanted());
+        Seeding seeding = new Seeding(agriculturalProcess, activityType, command.date(), command.plantType(), command.quantityPlanted());
         this.activities.add(seeding);
     }
 
