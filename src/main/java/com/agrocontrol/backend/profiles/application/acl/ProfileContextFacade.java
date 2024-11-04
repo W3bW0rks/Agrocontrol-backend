@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.profiles.interfaces.acl;
+package com.agrocontrol.backend.profiles.application.acl;
 
 
 import com.agrocontrol.backend.profiles.domain.model.commands.CreateAgriculturalProducerCommand;

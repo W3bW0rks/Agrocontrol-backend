@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.iam.interfaces.acl;
+package com.agrocontrol.backend.iam.application.acl;
 
 
 import com.agrocontrol.backend.iam.domain.model.queries.CheckUserByIdQuery;

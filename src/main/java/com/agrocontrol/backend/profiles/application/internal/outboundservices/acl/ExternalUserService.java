@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.profiles.application.internal.outboundservices.acl;
 
 
-import com.agrocontrol.backend.iam.interfaces.acl.UserContextFacade;
+import com.agrocontrol.backend.iam.application.acl.UserContextFacade;
 import org.springframework.stereotype.Service;
 
 @Service
