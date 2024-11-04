@@ -24,7 +24,13 @@ public class AgriculturalProducerQueryServiceImpl implements AgriculturalProduce
         // Validar si el usuario existe
         externalUserService.validateUserExists(query.userId());
 
-        // Si existe, continuar con la búsqueda del productor agrícola
+        // Validar si el productor agrícola tiene un user asociado
+        boolean agriculturalProducerExists = agriculturalProducerRepository.existsByUserId(query.userId());
+        if (!agriculturalProducerExists) {
+            throw new IllegalArgumentException("Agricultural Producer not found for user id: " + query.userId());
+        }
+
+        // Continuar con la búsqueda del productor agrícola
         return agriculturalProducerRepository.findAgriculturalProducerByUserId(query.userId());
     }
 }

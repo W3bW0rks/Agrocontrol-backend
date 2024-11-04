@@ -15,4 +15,6 @@ public interface AgriculturalProducerRepository extends JpaRepository<Agricultur
 
     // Verificar existencia de Phone
     boolean existsByPhone_Phone(String phone);
+
+    boolean existsByUserId(Long userId);
 }

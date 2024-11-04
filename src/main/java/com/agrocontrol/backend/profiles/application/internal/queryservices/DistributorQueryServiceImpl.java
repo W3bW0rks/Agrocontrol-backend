@@ -24,6 +24,12 @@ public class DistributorQueryServiceImpl implements DistributorQueryService {
         // Validar si el usuario existe
         externalUserService.validateUserExists(query.userId());
 
+        // Validar si el distribuidor agrícola tiene un user asociado
+        boolean distributorExists = distributorRepository.existsByUserId(query.userId());
+        if (!distributorExists) {
+            throw new IllegalArgumentException("Distributor not found for user id: " + query.userId());
+        }
+
         // Si existe, continuar con la búsqueda del distribuidor
         return distributorRepository.findDistributorByUserId(query.userId());
     }
