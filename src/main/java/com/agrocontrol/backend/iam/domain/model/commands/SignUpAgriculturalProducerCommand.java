@@ -5,9 +5,11 @@ public record SignUpAgriculturalProducerCommand(String fullName, String email, S
     public SignUpAgriculturalProducerCommand {
         if (!email.contains("@"))
             throw new RuntimeException("Invalid email");
-        if (dni.length() != 8)
-            throw new RuntimeException("Invalid DNI");
-        if (phone.length() != 9)
-            throw new RuntimeException("Invalid phone number");
+        if (phone.length() != 9 || !phone.matches("\\d+")) {
+            throw new RuntimeException("Invalid phone number: must contain exactly 9 digits.");
+        }
+        if (dni.length() != 8 || !dni.matches("\\d+")) {
+            throw new RuntimeException("Invalid DNI: must contain exactly 8 digits.");
+        }
     }
 }

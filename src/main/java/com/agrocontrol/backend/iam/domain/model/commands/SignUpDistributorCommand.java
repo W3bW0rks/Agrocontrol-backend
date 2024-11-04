@@ -5,9 +5,12 @@ public record SignUpDistributorCommand(String fullName, String email, String pas
     public SignUpDistributorCommand {
         if (!email.contains("@"))
             throw new RuntimeException("Invalid email");
-        if (ruc.length() != 11)
-            throw new RuntimeException("Invalid RUC");
-        if (phone.length() != 9)
-            throw new RuntimeException("Invalid phone number");
+        if (phone.length() != 9 || !phone.matches("\\d+")) {
+            throw new RuntimeException("Invalid phone number: must contain exactly 9 digits.");
+        }
+        if (ruc.length() != 11 || !ruc.matches("\\d+")) {
+            throw new RuntimeException("Invalid RUC number: must contain exactly 11 digits.");
+        }
+        
     }
 }
