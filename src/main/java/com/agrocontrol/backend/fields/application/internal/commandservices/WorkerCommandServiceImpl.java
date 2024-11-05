@@ -1,5 +1,6 @@
 package com.agrocontrol.backend.fields.application.internal.commandservices;
 
+import com.agrocontrol.backend.fields.application.internal.outboundservices.acl.ExternalProfileService;
 import com.agrocontrol.backend.fields.domain.model.aggregates.Worker;
 import com.agrocontrol.backend.fields.domain.model.commands.CreateWorkerCommand;
 import com.agrocontrol.backend.fields.domain.model.commands.DeleteWorkerCommand;
@@ -13,13 +14,17 @@ import java.util.Optional;
 @Service
 public class WorkerCommandServiceImpl implements WorkerCommandService {
     private final WorkerRepository workerRepository;
+    private final ExternalProfileService externalProfileService;
 
-    public WorkerCommandServiceImpl(WorkerRepository workerRepository) {
+    public WorkerCommandServiceImpl(WorkerRepository workerRepository, ExternalProfileService externalProfileService) {
         this.workerRepository = workerRepository;
+        this.externalProfileService = externalProfileService;
     }
 
     @Override
     public Optional<Worker> handle(CreateWorkerCommand command) {
+        externalProfileService.exitsAgriculturalProducer(command.producerId());
+
         var worker = new Worker(command);
         var workerCreated = workerRepository.save(worker);
 

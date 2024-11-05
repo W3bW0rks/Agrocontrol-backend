@@ -1,14 +1,15 @@
 package com.agrocontrol.backend.iam.application.internal.outboundservices.acl;
 
 
-import com.agrocontrol.backend.profiles.application.acl.ProfileContextFacade;
+import com.agrocontrol.backend.profiles.application.acl.ProfileContextFacadeImpl;
+import com.agrocontrol.backend.profiles.interfaces.acl.ProfilesContextFacade;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ExternalProfileService {
-    private final ProfileContextFacade profileContextFacade;
+    private final ProfilesContextFacade profileContextFacade;
 
-    public ExternalProfileService(ProfileContextFacade profileContextFacade) {
+    public ExternalProfileService(ProfilesContextFacade profileContextFacade) {
         this.profileContextFacade = profileContextFacade;
     }
 

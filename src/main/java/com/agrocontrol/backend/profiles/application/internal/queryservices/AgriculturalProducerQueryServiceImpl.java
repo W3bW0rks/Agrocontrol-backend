@@ -11,26 +11,14 @@ import java.util.Optional;
 
 @Service
 public class AgriculturalProducerQueryServiceImpl implements AgriculturalProducerQueryService {
-    private final ExternalUserService externalUserService;
     private final AgriculturalProducerRepository agriculturalProducerRepository;
 
-    public AgriculturalProducerQueryServiceImpl(ExternalUserService externalUserService, AgriculturalProducerRepository agriculturalProducerRepository) {
-        this.externalUserService = externalUserService;
+    public AgriculturalProducerQueryServiceImpl(AgriculturalProducerRepository agriculturalProducerRepository) {
         this.agriculturalProducerRepository = agriculturalProducerRepository;
     }
 
     @Override
     public Optional<AgriculturalProducer> handle(GetAgriculturalProducerByUserIdAsyncQuery query) {
-        // Validar si el usuario existe
-        externalUserService.validateUserExists(query.userId());
-
-        // Validar si el productor agrícola tiene un user asociado
-        boolean agriculturalProducerExists = agriculturalProducerRepository.existsByUserId(query.userId());
-        if (!agriculturalProducerExists) {
-            throw new IllegalArgumentException("Agricultural Producer not found for user id: " + query.userId());
-        }
-
-        // Continuar con la búsqueda del productor agrícola
         return agriculturalProducerRepository.findAgriculturalProducerByUserId(query.userId());
     }
 }
