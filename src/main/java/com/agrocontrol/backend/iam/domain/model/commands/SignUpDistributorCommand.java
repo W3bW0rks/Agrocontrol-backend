@@ -11,6 +11,5 @@ public record SignUpDistributorCommand(String fullName, String email, String pas
         if (ruc.length() != 11 || !ruc.matches("\\d+")) {
             throw new RuntimeException("Invalid RUC number: must contain exactly 11 digits.");
         }
-        
     }
 }

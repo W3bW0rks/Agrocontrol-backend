@@ -23,11 +23,10 @@ import java.util.function.Function;
 /**
  * Service implementation for handling JSON Web Tokens (JWT).
  * Implementación del servicio para manejar tokens JSON Web (JWT).
- *
  * This class provides methods for generating, validating, and extracting
  * information from JWT tokens. It utilizes the secret key and expiration
  * days defined in the application properties.
- *
+
  * Esta clase proporciona métodos para generar, validar y extraer
  * información de los tokens JWT. Utiliza la clave secreta y los días de
  * expiración definidos en las propiedades de la aplicación.
@@ -88,9 +87,9 @@ public class TokenServiceImpl implements BearerTokenService {
         var expiration = DateUtils.addDays(issuedAt, expirationDays);
         var key = getSigningKey();
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(issuedAt)
-                .setExpiration(expiration)
+                .subject(username)
+                .issuedAt(issuedAt)
+                .expiration(expiration)
                 .signWith(key)
                 .compact();
     }
