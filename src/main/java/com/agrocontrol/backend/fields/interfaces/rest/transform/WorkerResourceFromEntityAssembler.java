@@ -7,6 +7,7 @@ public class WorkerResourceFromEntityAssembler {
     public static WorkerResource toResourceFromEntity(Worker entity) {
         return new WorkerResource(
                 entity.getId(),
+                entity.getProducerId(),
                 entity.getFullName(),
                 entity.getDocumentNumber()
         );
