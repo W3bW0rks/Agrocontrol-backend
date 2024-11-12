@@ -44,14 +44,13 @@ public class UsersController {
         return ResponseEntity.ok(userResources);
     }
 
-    /*
-    *//**
+    /**
      * This method returns the user with the given id.
      * @param userId the user id
      * @return the user resource with the given id
      * @throws RuntimeException if the user is not found
      * @see UserResource
-     *//*
+     */
     @GetMapping(value = "/{userId}")
     public ResponseEntity<UserResource> getUserById(@PathVariable Long userId) {
         var getUserByIdQuery = new GetUserByIdQuery(userId);
@@ -61,5 +60,5 @@ public class UsersController {
         }
         var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
         return ResponseEntity.ok(userResource);
-    }*/
+    }
 }
