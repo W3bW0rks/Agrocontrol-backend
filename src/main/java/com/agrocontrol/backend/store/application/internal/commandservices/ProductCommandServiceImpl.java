@@ -1,5 +1,6 @@
 package com.agrocontrol.backend.store.application.internal.commandservices;
 
+import com.agrocontrol.backend.store.application.internal.outboundservices.acl.ExternalProfileService;
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
 import com.agrocontrol.backend.store.domain.model.commands.UpdateProductCommand;
@@ -15,13 +16,16 @@ import java.util.Optional;
 public class ProductCommandServiceImpl implements ProductCommandService {
 
     private final ProductRepository productRepository;
+    private final ExternalProfileService externalProfileService;
 
-    public ProductCommandServiceImpl(ProductRepository productRepository) {
+    public ProductCommandServiceImpl(ProductRepository productRepository, ExternalProfileService externalProfileService) {
         this.productRepository = productRepository;
+        this.externalProfileService = externalProfileService;
     }
 
     @Override
     public Optional<Product> handle(CreateProductCommand command) {
+        externalProfileService.existsDistributor(command.userId());
 
        if(command.quantity() <= 0 && command.unitPrice() <= 0)
            throw new IllegalArgumentException("Unit price must be greater than 0");
