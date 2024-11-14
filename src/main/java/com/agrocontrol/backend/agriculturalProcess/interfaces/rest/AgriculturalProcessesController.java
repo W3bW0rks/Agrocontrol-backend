@@ -68,25 +68,35 @@ public class AgriculturalProcessesController {
     public ResponseEntity<AgriculturalActivityResource> addActivityToAgriculturalProcess(
             @RequestParam Long agriculturalProcessId,
             @RequestParam String date,
-            @RequestParam(required = false) Integer hoursIrrigated,
+            @RequestParam(required = false) Double hoursIrrigated,
             @RequestParam(required = false) String plantType,
             @RequestParam(required = false) Integer quantityPlanted,
             @RequestParam(required = false) String treatmentType,
-            @RequestParam(required = false) double quantityInKg,
-            @RequestParam(required = false) double pricePerKg) {
+            @RequestParam(required = false) Double quantityInKg,
+            @RequestParam(required = false) Double pricePerKg) {
 
-        if (hoursIrrigated != null) {
+        // Check for irrigation activity
+        if (hoursIrrigated != null && hoursIrrigated > 0) {
             return addIrrigationToProcess(date, hoursIrrigated, agriculturalProcessId);
-        } else if (plantType != null && quantityPlanted != null) {
+        }
+        // Check for seeding activity
+        else if (plantType != null && quantityPlanted != null && quantityPlanted > 0) {
             return addSeedingToProcess(date, plantType, quantityPlanted, agriculturalProcessId);
-        } else if (treatmentType != null) {
+        }
+        // Check for crop treatment activity
+        else if (treatmentType != null && !treatmentType.trim().isEmpty()) {
             return addCropTreatmentToProcess(date, treatmentType, agriculturalProcessId);
-        } else if (quantityInKg != 0 && pricePerKg != 0) {
+        }
+        // Check for harvest activity
+        else if (quantityInKg != null && quantityInKg > 0 && pricePerKg != null && pricePerKg > 0) {
             return addHarvestToProcess(date, quantityInKg, pricePerKg, agriculturalProcessId);
-        } else {
+        }
+        // If no valid parameters are found, return a bad request response
+        else {
             return ResponseEntity.badRequest().build();
         }
     }
+
 
     private ResponseEntity<AgriculturalActivityResource> addHarvestToProcess(String date, double quantityInKg, double pricePerKg, Long agriculturalProcessId) {
         var command = new AddHarvestToProcessCommand(date, quantityInKg, pricePerKg, agriculturalProcessId);
@@ -108,7 +118,8 @@ public class AgriculturalProcessesController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    private ResponseEntity<AgriculturalActivityResource> addIrrigationToProcess(String date, Integer hoursIrrigated, Long agriculturalProcessId) {
+    private ResponseEntity<AgriculturalActivityResource> addIrrigationToProcess(String date, double hours, Long agriculturalProcessId) {
+        var hoursIrrigated = Integer.valueOf((int) hours);
         var command = new AddIrrigationToProcessCommand(date, hoursIrrigated, agriculturalProcessId);
         var agriculturalProcess = this.commandService.handle(command);
 
