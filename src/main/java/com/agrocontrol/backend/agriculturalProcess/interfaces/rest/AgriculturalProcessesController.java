@@ -202,8 +202,10 @@ public class AgriculturalProcessesController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Bad request")
     })
     @PutMapping("/activity/{activityId}/execute")
-    public ResponseEntity<AgriculturalActivityResource> executeActionInAgriculturalActivity(@RequestBody ExecuteAgriculturalActivityActionResource resource) {
-        var activity = this.commandService.handle(ExecuteAgriculturalActivityActionCommandFromResourceAssembler.toCommandFromResource(resource));
+    public ResponseEntity<AgriculturalActivityResource> executeActionInAgriculturalActivity(@PathVariable Long activityId,
+                                                                                            @RequestBody ExecuteAgriculturalActivityActionResource resource) {
+        var activity = this.commandService.handle(ExecuteAgriculturalActivityActionCommandFromResourceAssembler
+                .toCommandFromResource(resource, activityId));
         return activity.map(source ->
                         new ResponseEntity<>(AgriculturalActivityResourceAssembler.toResourceFromEntity(source),
                                 HttpStatus.CREATED))

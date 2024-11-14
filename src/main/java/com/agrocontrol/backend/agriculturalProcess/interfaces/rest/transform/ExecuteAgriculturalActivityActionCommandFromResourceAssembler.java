@@ -4,10 +4,10 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.Execute
 import com.agrocontrol.backend.agriculturalProcess.interfaces.rest.resources.ExecuteAgriculturalActivityActionResource;
 
 public class ExecuteAgriculturalActivityActionCommandFromResourceAssembler {
-    public static ExecuteAgriculturalActivityActionCommand toCommandFromResource(ExecuteAgriculturalActivityActionResource resource) {
+    public static ExecuteAgriculturalActivityActionCommand toCommandFromResource(ExecuteAgriculturalActivityActionResource resource, Long id) {
         return new ExecuteAgriculturalActivityActionCommand(
                 resource.agriculturalProcessId(),
-                resource.activityId(),
+                id,
                 resource.action()
         );
     }
