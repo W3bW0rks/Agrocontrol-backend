@@ -2,10 +2,7 @@ package com.agrocontrol.backend.store.application.internal.commandservices;
 
 import com.agrocontrol.backend.store.application.internal.outboundservices.acl.ExternalProfileService;
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
-import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
-import com.agrocontrol.backend.store.domain.model.commands.UpdateProductCommand;
-import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;
-import com.agrocontrol.backend.store.domain.model.commands.UpdateProductOwnerCommand;
+import com.agrocontrol.backend.store.domain.model.commands.*;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
 import com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -60,6 +57,17 @@ public class ProductCommandServiceImpl implements ProductCommandService {
             var updatedProduct = productRepository.save(product);
 
             return Optional.of(updatedProduct);
+    }
+
+    @Override
+    public Optional<Product> handle(ReduceProductQuantityCommand command) {
+        var product = productRepository.findById(command.productId())
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+
+        product.decreaseQuantity(command.quantityToReduce());
+        var updatedProduct = productRepository.save(product);
+
+        return Optional.of(updatedProduct);
     }
 
 

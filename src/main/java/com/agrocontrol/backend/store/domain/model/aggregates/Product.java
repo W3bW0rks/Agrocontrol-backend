@@ -2,8 +2,6 @@ package com.agrocontrol.backend.store.domain.model.aggregates;
 
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import com.agrocontrol.backend.store.domain.model.commands.*;
-import com.agrocontrol.backend.store.domain.model.valueobjects.UserId;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,8 +10,8 @@ import lombok.Getter;
 @Entity
 public class Product extends AuditableAbstractAggregateRoot<Product> {
 
-    @Embedded
-    private UserId userId;
+    @NotNull
+    private Long userId;
 
     @NotNull
     private String name;
@@ -29,7 +27,7 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
     protected Product() {}
 
     public Product(CreateProductCommand command) {
-        this.userId = new UserId(command.userId());
+        this.userId = command.userId();
         this.name = command.name();
         this.quantityPerUnit = command.quantityPerUnit();
         this.unitPrice = command.unitPrice();
@@ -46,7 +44,7 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
     }
 
     public void updateProductOwner(UpdateProductOwnerCommand command) {
-        this.userId = new UserId(command.userId());
+        this.userId = command.userId();
     }
 
     public void changeQuantity(ChangeQuantityOfProductCommand command) {
@@ -61,23 +59,16 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
         this.quantity += newQuantity;
     }
 
-    private void decreaseQuantity(Integer newQuantity) {
-
+    public void decreaseQuantity(Integer newQuantity) {
         if (this.quantity == 0)
             throw new IllegalArgumentException("Product is out of stock");
 
         if (this.quantity - newQuantity <= 0) {
-
             var exceededQuantity = newQuantity - this.quantity;
             this.quantity = 0;
-            
             throw new IllegalArgumentException("Product is out of stock. Exceeded quantity: " + exceededQuantity);
         }
 
         this.quantity -= newQuantity;
-    }
-
-    public Long getUserId() {
-        return userId.userId();
     }
 }
