@@ -130,9 +130,7 @@ public class ProductsController {
     })
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ProductResource>> getProductByUserId(@PathVariable Long userId) {
-
-        var id = new UserId(userId);
-        var query = new GetProductByUserIdQuery(id);
+        var query = new GetProductByUserIdQuery(userId);
 
         List<Product> products = this.productQueryService.handle(query);
 
