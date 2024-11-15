@@ -93,14 +93,16 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
-        if (command.cost() > 0) {
-            this.externalFinanceService.createFinance(agriculturalProcess.getId(), "EXPENSE", command.cost());
-        }
-
         // TODO: Implement method to assign name to resource
         String name = "Resource";
 
         agriculturalProcess.addResourceToActivity(command, name);
+
+        if (command.cost() > 0) {
+            this.externalFinanceService.createFinance(agriculturalProcess.getId(), "EXPENSE",
+                    command.description(), command.cost());
+        }
+
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.activityId()));
     }

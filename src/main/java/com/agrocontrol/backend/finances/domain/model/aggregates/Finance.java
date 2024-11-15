@@ -5,6 +5,7 @@ import com.agrocontrol.backend.finances.domain.model.valueobjects.AgriculturalPr
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -23,6 +24,9 @@ public class Finance extends AuditableAbstractAggregateRoot<Finance> {
     @NotNull
     private String type;
 
+    @NotBlank
+    private String description;
+
     @NotNull
     private double value;
 
@@ -32,6 +36,7 @@ public class Finance extends AuditableAbstractAggregateRoot<Finance> {
         this.agriculturalProcessId = new AgriculturalProcessId(command.agriculturalProcessId());
         this.date = LocalDate.now();
         this.type = command.type();
+        this.description = command.description();
         this.value = command.value();
     }
 

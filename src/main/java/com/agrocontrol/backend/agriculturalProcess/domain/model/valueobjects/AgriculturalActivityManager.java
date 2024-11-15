@@ -54,7 +54,7 @@ public class AgriculturalActivityManager {
 
     public void addResourceToActivity(AddResourceToActivityCommand command, String name) {
         AgriculturalActivity activity = getActivityById(command.activityId());
-        activity.addResource(command.resourceId(), name, command.cost(), command.quantity());
+        activity.addResource(command.resourceId(), command.description(), name, command.cost(), command.quantity());
     }
 
     // Check if an activity is in a specific status

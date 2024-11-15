@@ -10,6 +10,7 @@ public class FinanceResourceFromEntityAssembler {
                 finance.getAgriculturalProcessId(),
                 finance.getDate(),
                 finance.getType(),
+                finance.getDescription(),
                 finance.getValue()
         );
     }

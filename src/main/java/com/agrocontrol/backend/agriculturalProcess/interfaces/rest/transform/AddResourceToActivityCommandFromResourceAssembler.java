@@ -7,6 +7,7 @@ public class AddResourceToActivityCommandFromResourceAssembler {
     public static AddResourceToActivityCommand toCommandFromResource(AddResourceToActivityResource resource) {
         return new AddResourceToActivityCommand(
                 resource.resourceId(),
+                resource.description(),
                 resource.cost(),
                 resource.quantity(),
                 resource.activityId(),

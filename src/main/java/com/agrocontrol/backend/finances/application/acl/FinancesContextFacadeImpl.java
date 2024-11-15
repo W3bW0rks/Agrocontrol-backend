@@ -14,9 +14,11 @@ public class FinancesContextFacadeImpl implements FinancesContextFacade {
     }
 
     @Override
-    public Long createFinance(Long agriculturalProcessId, String type, double value) {
-        var createFinanceCommand = new CreateFinanceCommand(agriculturalProcessId, type, value);
+    public void createFinance(Long agriculturalProcessId, String type, String description, double value) {
+        var createFinanceCommand = new CreateFinanceCommand(agriculturalProcessId, type, description, value);
         var finance = financeCommandService.handle(createFinanceCommand);
-        return finance.isEmpty() ? Long.valueOf(0L) : finance.get().getId();
+        if (finance.isPresent()) {
+            finance.get();
+        }
     }
 }

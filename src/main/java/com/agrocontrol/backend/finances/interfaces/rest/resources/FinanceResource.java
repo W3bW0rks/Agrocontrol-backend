@@ -7,6 +7,7 @@ public record FinanceResource(
         Long agriculturalProcessId,
         LocalDate date,
         String type,
+        String description,
         double value
 ) {
 }

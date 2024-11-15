@@ -8,6 +8,7 @@ public class CreateFinanceCommandFromResourceAssembler {
         return new CreateFinanceCommand(
                 resource.agriculturalProcessId(),
                 resource.type(),
+                resource.description(),
                 resource.value()
         );
     }

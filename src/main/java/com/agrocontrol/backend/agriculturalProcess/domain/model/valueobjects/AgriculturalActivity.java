@@ -58,8 +58,8 @@ public class AgriculturalActivity extends AuditableAbstractAggregateRoot<Agricul
         this.activityStatus = ActivityStatus.CANCELLED;
     }
 
-    public void addResource(Long resourceId, String name, Integer cost, Integer quantity) {
-        this.resources.add(new Resource(resourceId, name, cost, quantity));
+    public void addResource(Long resourceId, String description, String name, Integer cost, Integer quantity) {
+        this.resources.add(new Resource(resourceId, description, name, cost, quantity));
         calculateWorkersTotalCost();
     }
 
