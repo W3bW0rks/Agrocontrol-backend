@@ -28,11 +28,12 @@ public class PaymentProductCommandServiceImpl implements PaymentProductCommandSe
     public Optional<PaymentProduct> handle(CreatePaymentProductCommand command) {
         externalProductContextFacade.validateProductId(command.productId());
         Long distributorId = externalProductContextFacade.getUserIdByProductId(command.productId());
+        String productName = externalProductContextFacade.getProductNameByProductId(command.productId());
         double unitPriceProduct = externalProductContextFacade.getUnitPriceProductByProductId(command.productId());
         double totalCostProduct = unitPriceProduct * command.quantityProduct();
         externalProductContextFacade.reduceProductQuantity(command.productId(), command.quantityProduct());
         externalProfileContextFacade.exitsAgriculturalProducer(command.userId());
-        var paymentProduct = new PaymentProduct(command, distributorId, totalCostProduct);
+        var paymentProduct = new PaymentProduct(command, productName, distributorId, totalCostProduct);
         var paymentProductCreated = paymentProductRepository.save(paymentProduct);
         return Optional.of(paymentProductCreated);
     }

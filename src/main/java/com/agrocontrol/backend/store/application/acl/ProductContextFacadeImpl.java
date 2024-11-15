@@ -30,7 +30,6 @@ public class ProductContextFacadeImpl implements ProductContextFacade {
     @Override
     public String getProductNameByProductId(Long productId) {
         return productQueryService.handle(new GetNameByIdQuery(productId))
-                .map(Product::getName)
                 .orElse("");
     }
 

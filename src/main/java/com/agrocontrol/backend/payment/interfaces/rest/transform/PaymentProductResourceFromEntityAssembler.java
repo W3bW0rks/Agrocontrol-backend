@@ -6,7 +6,7 @@ import com.agrocontrol.backend.payment.interfaces.rest.resources.PaymentProductR
 public class PaymentProductResourceFromEntityAssembler {
     public static PaymentProductResource toResourceFromEntity(PaymentProduct paymentProduct) {
         return new PaymentProductResource(paymentProduct.getId(),paymentProduct.getDate(),
-                paymentProduct.getProductId(), paymentProduct.getQuantityProduct(), paymentProduct.getTotalCost(),
+                paymentProduct.getProductId(), paymentProduct.getProductName(), paymentProduct.getQuantityProduct(), paymentProduct.getTotalCost(),
                 paymentProduct.getUserId(), paymentProduct.getOwnerProductId());
     }
 }

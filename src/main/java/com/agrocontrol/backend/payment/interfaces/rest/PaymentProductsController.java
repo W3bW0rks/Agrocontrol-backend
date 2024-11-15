@@ -1,14 +1,11 @@
 package com.agrocontrol.backend.payment.interfaces.rest;
 
-import com.agrocontrol.backend.payment.domain.model.commands.CreatePaymentProductCommand;
 import com.agrocontrol.backend.payment.domain.model.queries.GetPaymentProductByOwnerProductId;
 import com.agrocontrol.backend.payment.domain.services.PaymentProductCommandService;
 import com.agrocontrol.backend.payment.domain.services.PaymentProductQueryService;
 import com.agrocontrol.backend.payment.interfaces.rest.resources.CreatePaymentProductResource;
-import com.agrocontrol.backend.payment.interfaces.rest.resources.PaymentProductHistoryResource;
 import com.agrocontrol.backend.payment.interfaces.rest.resources.PaymentProductResource;
 import com.agrocontrol.backend.payment.interfaces.rest.transform.CreatePaymentProductCommandFromResourceAssembler;
-import com.agrocontrol.backend.payment.interfaces.rest.transform.PaymentProductHistoryResourceFromEntityAssembler;
 import com.agrocontrol.backend.payment.interfaces.rest.transform.PaymentProductResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -50,11 +47,11 @@ public class PaymentProductsController {
     }
 
     @GetMapping(value = "/history-payments-products/{ownerProductId}")
-    public ResponseEntity<List<PaymentProductHistoryResource>> getPaymentProductHistoryByOwnerProductId(@PathVariable Long ownerProductId) {
+    public ResponseEntity<List<PaymentProductResource>> getPaymentProductHistoryByOwnerProductId(@PathVariable Long ownerProductId) {
         var getPaymentProductByOwnerProductId = new GetPaymentProductByOwnerProductId(ownerProductId);
         var paymentsProducts = paymentProductQueryService.handle(getPaymentProductByOwnerProductId);
-        var paymentProductHistoryResource = paymentsProducts.stream()
-                .map(PaymentProductHistoryResourceFromEntityAssembler::toResourceFromEntity).toList();
-        return ResponseEntity.ok(paymentProductHistoryResource);
+        var PaymentProductResource = paymentsProducts.stream()
+                .map(PaymentProductResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(PaymentProductResource);
     }
 }

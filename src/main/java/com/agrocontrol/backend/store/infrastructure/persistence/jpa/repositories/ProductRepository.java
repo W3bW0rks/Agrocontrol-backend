@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Double> findUnitPriceById(Long id);
 
     @Query("SELECT p.name FROM Product p WHERE p.id = :id")
-    Optional<Product> findNameById(Long id);
+    Optional<String> findNameById(Long id);
 
     @Query("SELECT p.userId FROM Product p WHERE p.id = :id")
     Optional<Long> findUserIdById(Long id);

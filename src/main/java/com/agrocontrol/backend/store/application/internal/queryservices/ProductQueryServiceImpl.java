@@ -43,7 +43,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     @Override
-    public Optional<Product> handle(GetNameByIdQuery query) {
+    public Optional<String> handle(GetNameByIdQuery query) {
         return productRepository.findNameById(query.id());
     }
 
