@@ -4,7 +4,7 @@ import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.commands.ReduceProductQuantityCommand;
 import com.agrocontrol.backend.store.domain.model.queries.CheckProductByIdQuery;
 import com.agrocontrol.backend.store.domain.model.queries.GetNameByIdQuery;
-import com.agrocontrol.backend.store.domain.model.queries.GetQuantityByIdQuery;
+import com.agrocontrol.backend.store.domain.model.queries.GetUnitPriceByIdQuery;
 import com.agrocontrol.backend.store.domain.model.queries.GetUserIdByIdQuery;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
 import com.agrocontrol.backend.store.domain.services.ProductQueryService;
@@ -22,10 +22,9 @@ public class ProductContextFacadeImpl implements ProductContextFacade {
     }
 
     @Override
-    public Integer getQuantityProductByProductId(Long productId) {
-        return productQueryService.handle(new GetQuantityByIdQuery(productId))
-                .map(Product::getQuantity)
-                .orElse(0);
+    public Double getUnitPriceByProductId(Long productId) {
+        return productQueryService.handle(new GetUnitPriceByIdQuery(productId))
+                .orElse((double) 0);
     }
 
     @Override
@@ -38,7 +37,6 @@ public class ProductContextFacadeImpl implements ProductContextFacade {
     @Override
     public Long getUserIdByProductId(Long productId) {
         return productQueryService.handle(new GetUserIdByIdQuery(productId))
-                .map(Product::getUserId)
                 .orElse(0L);
     }
 

@@ -7,7 +7,6 @@ import com.agrocontrol.backend.payment.infrastructure.persistence.jpa.repositori
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PaymentProductQueryServiceImpl implements PaymentProductQueryService {
@@ -18,10 +17,10 @@ public class PaymentProductQueryServiceImpl implements PaymentProductQueryServic
     }
 
     @Override
-    public Optional<List<PaymentProduct>> handle(GetPaymentProductByOwnerProductId query) {
+    public List<PaymentProduct> handle(GetPaymentProductByOwnerProductId query) {
         if(!paymentProductRepository.existsByOwnerProductId(query.ownerProductId())) {
             throw new IllegalArgumentException("The OwnerProductId not exist with id" + query.ownerProductId());
         }
-        return Optional.ofNullable(paymentProductRepository.findByOwnerProductId(query.ownerProductId()));
+        return paymentProductRepository.findByOwnerProductId(query.ownerProductId());
     }
 }

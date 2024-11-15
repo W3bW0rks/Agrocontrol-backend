@@ -11,8 +11,8 @@ public class ExternalProductContextFacade {
         this.productContextFacade = productContextFacade;
     }
 
-    public Integer getQuantityProductByProductId(Long productId) {
-        Integer quantity = productContextFacade.getQuantityProductByProductId(productId);
+    public Double getUnitPriceProductByProductId(Long productId) {
+        double quantity = productContextFacade.getUnitPriceByProductId(productId);
         if (quantity == 0) {
             throw new IllegalStateException("Failed to get quantity for product with ID %s.".formatted(productId));
         }

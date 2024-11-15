@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.store.interfaces.acl;
 
 public interface ProductContextFacade {
-    Integer getQuantityProductByProductId(Long productId);
+    Double getUnitPriceByProductId(Long productId);
     String getProductNameByProductId(Long productId);
     Long getUserIdByProductId(Long productId);
     boolean ValidateProductId(Long productId);

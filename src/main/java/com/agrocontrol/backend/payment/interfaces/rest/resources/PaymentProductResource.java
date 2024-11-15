@@ -3,13 +3,11 @@ package com.agrocontrol.backend.payment.interfaces.rest.resources;
 import java.time.LocalDate;
 
 public record PaymentProductResource(
+        Long id,
         LocalDate date,
-        String cardHolderName,
-        String cardNumber,
-        String ExpireDate,
-        String cvv,
         Long productId,
         Integer quantityProduct,
+        Double totalCostProduct,
         Long userId,
         Long ownerProductId
 ) {

@@ -1,6 +1,5 @@
 package com.agrocontrol.backend.store.application.internal.queryservices;
 
-import com.agrocontrol.backend.iam.domain.model.queries.GetUserByIdQuery;
 import com.agrocontrol.backend.store.application.internal.outboundservices.acl.ExternalProfileService;
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.queries.*;
@@ -39,8 +38,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     @Override
-    public Optional<Product> handle(GetQuantityByIdQuery query) {
-        return productRepository.findQuantityById(query.id());
+    public Optional<Double> handle(GetUnitPriceByIdQuery query) {
+        return productRepository.findUnitPriceById(query.id());
     }
 
     @Override
@@ -49,7 +48,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     @Override
-    public Optional<Product> handle(GetUserIdByIdQuery query) {
+    public Optional<Long> handle(GetUserIdByIdQuery query) {
         return productRepository.findUserIdById(query.id());
     }
 

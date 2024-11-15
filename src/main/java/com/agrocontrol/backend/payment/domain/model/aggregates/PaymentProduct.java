@@ -17,19 +17,6 @@ public class PaymentProduct extends AuditableAbstractAggregateRoot<PaymentProduc
     private LocalDate date;
 
     @NotNull
-    private String cardHolderName;
-
-    @NotNull
-    @Size(max = 16)
-    private String cardNumber;
-
-    @NotNull
-    private String ExpireDate;
-
-    @NotNull
-    private String cvv;
-
-    @NotNull
     private Long productId;
 
     @NotNull
@@ -41,17 +28,17 @@ public class PaymentProduct extends AuditableAbstractAggregateRoot<PaymentProduc
     @NotNull
     private Long ownerProductId;
 
+    @NotNull
+    private Double totalCost;
+
     protected PaymentProduct() {}
 
-    public PaymentProduct(CreatePaymentProductCommand command, Long ownerProductId) {
+    public PaymentProduct(CreatePaymentProductCommand command, Long ownerProductId, Double totalCost) {
         this.date = LocalDate.now();
-        this.cardHolderName = command.cardHolderName();
-        this.cardNumber = command.cardNumber();
-        this.ExpireDate = command.ExpireDate();
-        this.cvv = command.cvv();
         this.productId = command.productId();
         this.quantityProduct = command.quantityProduct();
         this.userId = command.userId();
         this.ownerProductId = ownerProductId;
+        this.totalCost = totalCost;
     }
 }

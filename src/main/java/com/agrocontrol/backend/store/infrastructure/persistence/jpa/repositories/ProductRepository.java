@@ -15,12 +15,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByUserId(Long userId);
 
-    @Query("SELECT p.quantity FROM Product p WHERE p.id = :id")
-    Optional<Product> findQuantityById(Long id);
+    @Query("SELECT p.unitPrice FROM Product p WHERE p.id = :id")
+    Optional<Double> findUnitPriceById(Long id);
 
     @Query("SELECT p.name FROM Product p WHERE p.id = :id")
     Optional<Product> findNameById(Long id);
 
     @Query("SELECT p.userId FROM Product p WHERE p.id = :id")
-    Optional<Product> findUserIdById(Long id);
+    Optional<Long> findUserIdById(Long id);
 }
