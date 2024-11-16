@@ -13,7 +13,11 @@ public class ExternalStoreService {
         this.productsContextFacade = productsContextFacade;
     }
 
-    public Optional<String> getProductNameById(Long productId) {
+    public String getProductNameById(Long productId) {
         return this.productsContextFacade.getProductNameById(productId);
+    }
+
+    public void changeQuantityOfProduct(Long productId, Integer quantity) {
+        this.productsContextFacade.changeQuantityOfProduct(productId, quantity, "decrease");
     }
 }

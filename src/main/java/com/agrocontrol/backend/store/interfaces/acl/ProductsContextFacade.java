@@ -4,5 +4,7 @@ import java.util.Optional;
 
 public interface ProductsContextFacade {
 
-    Optional<String> getProductNameById(Long productId);
+    String getProductNameById(Long productId);
+
+    String changeQuantityOfProduct(Long productId, int quantity, String action);
 }

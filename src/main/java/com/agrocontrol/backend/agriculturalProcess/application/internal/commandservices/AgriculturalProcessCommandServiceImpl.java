@@ -70,7 +70,14 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
         agriculturalProcess.addActivity(command);
+
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
+
+        var subTotal = command.pricePerKg() * command.quantityInKg();
+
+        this.externalFinanceService.createFinance(agriculturalProcess.getId(), "INCOME",
+                "Harvest day: " + command.date(), subTotal);
+
         return Optional.ofNullable(updatedAgriculturalProcess.getLastActivityId());
     }
 
@@ -102,18 +109,16 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         String name = "";
         if (command.cost() > 0) {
             name = this.externalWorkerService.getWorkerNameById(command.resourceId());
+            this.externalFinanceService.createFinance(agriculturalProcess.getId(), "EXPENSE",
+                    command.description(), command.cost());
         } else if (command.quantity() > 0) {
             name = String.valueOf(this.externalStoreService.getProductNameById(command.resourceId()));
+            this.externalStoreService.changeQuantityOfProduct(command.resourceId(), command.quantity());
         } else {
             name = "Resource";
         }
 
         agriculturalProcess.addResourceToActivity(command, name);
-
-        if (command.cost() > 0) {
-            this.externalFinanceService.createFinance(agriculturalProcess.getId(), "EXPENSE",
-                    command.description(), command.cost());
-        }
 
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.activityId()));
