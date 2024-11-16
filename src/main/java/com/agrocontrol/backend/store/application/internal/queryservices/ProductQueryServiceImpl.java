@@ -36,6 +36,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         return productRepository.findByName(query.name());
     }
 
+    @Override
+    public Optional<String> handle(GetNameByIdQuery query) {
+        return productRepository.findNameById(query.id());
+    }
+
 
     @Override
     public boolean handle(CheckProductByIdQuery query) {

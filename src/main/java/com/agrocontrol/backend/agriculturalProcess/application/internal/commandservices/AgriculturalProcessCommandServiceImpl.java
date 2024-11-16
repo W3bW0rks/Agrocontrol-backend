@@ -1,6 +1,8 @@
 package com.agrocontrol.backend.agriculturalProcess.application.internal.commandservices;
 
 import com.agrocontrol.backend.agriculturalProcess.application.internal.outboundservices.acl.ExternalFinanceService;
+import com.agrocontrol.backend.agriculturalProcess.application.internal.outboundservices.acl.ExternalStoreService;
+import com.agrocontrol.backend.agriculturalProcess.application.internal.outboundservices.acl.ExternalWorkerService;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.*;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
@@ -14,11 +16,15 @@ import java.util.Optional;
 public class AgriculturalProcessCommandServiceImpl implements AgriculturalProcessCommandService {
     private final AgriculturalProcessRepository agriculturalProcessRepository;
     private final ExternalFinanceService externalFinanceService;
+    private final ExternalStoreService externalStoreService;
+    private final ExternalWorkerService externalWorkerService;
 
     public AgriculturalProcessCommandServiceImpl(AgriculturalProcessRepository agriculturalProcessRepository,
-                                                 ExternalFinanceService externalFinanceService) {
+                                                 ExternalFinanceService externalFinanceService, ExternalStoreService externalStoreService, ExternalWorkerService externalWorkerService) {
         this.agriculturalProcessRepository = agriculturalProcessRepository;
         this.externalFinanceService = externalFinanceService;
+        this.externalStoreService = externalStoreService;
+        this.externalWorkerService = externalWorkerService;
     }
 
     @Override
@@ -93,8 +99,14 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
-        // TODO: Implement method to assign name to resource
-        String name = "Resource";
+        String name = "";
+        if (command.cost() > 0) {
+            name = this.externalWorkerService.getWorkerNameById(command.resourceId());
+        } else if (command.quantity() > 0) {
+            name = String.valueOf(this.externalStoreService.getProductNameById(command.resourceId()));
+        } else {
+            name = "Resource";
+        }
 
         agriculturalProcess.addResourceToActivity(command, name);
 

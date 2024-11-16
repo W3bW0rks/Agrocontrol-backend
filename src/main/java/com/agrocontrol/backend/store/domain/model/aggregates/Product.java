@@ -68,7 +68,7 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
         }
     }
 
-    private void increaseQuantity(Integer newQuantity) {
+    public void increaseQuantity(Integer newQuantity) {
         this.quantity += newQuantity;
     }
 
