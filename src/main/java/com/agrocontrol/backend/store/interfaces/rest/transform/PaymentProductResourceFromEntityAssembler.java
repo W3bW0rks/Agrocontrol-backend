@@ -1,7 +1,7 @@
-package com.agrocontrol.backend.payment.interfaces.rest.transform;
+package com.agrocontrol.backend.store.interfaces.rest.transform;
 
-import com.agrocontrol.backend.payment.domain.model.aggregates.PaymentProduct;
-import com.agrocontrol.backend.payment.interfaces.rest.resources.PaymentProductResource;
+import com.agrocontrol.backend.store.domain.model.aggregates.PaymentProduct;
+import com.agrocontrol.backend.store.interfaces.rest.resources.PaymentProductResource;
 
 public class PaymentProductResourceFromEntityAssembler {
     public static PaymentProductResource toResourceFromEntity(PaymentProduct paymentProduct) {

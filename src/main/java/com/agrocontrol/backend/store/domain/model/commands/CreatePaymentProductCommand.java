@@ -1,6 +1,4 @@
-package com.agrocontrol.backend.payment.domain.model.commands;
-
-import java.time.LocalDate;
+package com.agrocontrol.backend.store.domain.model.commands;
 
 public record CreatePaymentProductCommand(
         Long productId,

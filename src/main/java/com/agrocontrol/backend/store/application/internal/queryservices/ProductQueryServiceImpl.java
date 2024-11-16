@@ -23,7 +23,6 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
     @Override
     public List<Product> handle(GetProductByUserIdQuery query) {
-        externalProfileService.existsDistributor(query.userId());
         return productRepository.findByUserId(query.userId());
     }
 
@@ -37,20 +36,6 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         return productRepository.findByName(query.name());
     }
 
-    @Override
-    public Optional<Double> handle(GetUnitPriceByIdQuery query) {
-        return productRepository.findUnitPriceById(query.id());
-    }
-
-    @Override
-    public Optional<String> handle(GetNameByIdQuery query) {
-        return productRepository.findNameById(query.id());
-    }
-
-    @Override
-    public Optional<Long> handle(GetUserIdByIdQuery query) {
-        return productRepository.findUserIdById(query.id());
-    }
 
     @Override
     public boolean handle(CheckProductByIdQuery query) {

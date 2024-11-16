@@ -1,11 +1,10 @@
-package com.agrocontrol.backend.payment.domain.model.aggregates;
+package com.agrocontrol.backend.store.domain.model.aggregates;
 
-import com.agrocontrol.backend.payment.domain.model.commands.CreatePaymentProductCommand;
+import com.agrocontrol.backend.store.domain.model.commands.CreatePaymentProductCommand;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 

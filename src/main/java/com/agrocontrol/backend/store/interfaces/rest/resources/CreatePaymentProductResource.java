@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.payment.interfaces.rest.resources;
+package com.agrocontrol.backend.store.interfaces.rest.resources;
 
 public record CreatePaymentProductResource(
         Long productId,

@@ -13,6 +13,8 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
     @NotNull
     private Long userId;
 
+    private Long previousId;
+
     @NotNull
     private String name;
     @NotNull
@@ -28,11 +30,22 @@ public class Product extends AuditableAbstractAggregateRoot<Product> {
 
     public Product(CreateProductCommand command) {
         this.userId = command.userId();
+        this.previousId = 0L;
         this.name = command.name();
         this.quantityPerUnit = command.quantityPerUnit();
         this.unitPrice = command.unitPrice();
         this.quantity = command.quantity();
         this.photoUrl = command.photoUrl();
+    }
+
+    public Product(Long userId, Long previousId, String name, String quantityPerUnit, double unitPrice, Integer quantity, String photoUrl) {
+        this.userId = userId;
+        this.previousId = previousId;
+        this.name = name;
+        this.quantityPerUnit = quantityPerUnit;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.photoUrl = photoUrl;
     }
 
     public void updateProduct(UpdateProductCommand command) {

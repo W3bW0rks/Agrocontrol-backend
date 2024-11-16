@@ -1,4 +1,4 @@
-package com.agrocontrol.backend.payment.domain.model.queries;
+package com.agrocontrol.backend.store.domain.model.queries;
 
 public record GetPaymentProductByOwnerProductId(Long ownerProductId) {
 
