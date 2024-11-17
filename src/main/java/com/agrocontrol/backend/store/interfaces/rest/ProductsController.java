@@ -2,6 +2,7 @@ package com.agrocontrol.backend.store.interfaces.rest;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import com.agrocontrol.backend.store.domain.model.queries.GetProductByUserIdQuery;
+import com.agrocontrol.backend.store.domain.model.queries.GetProductsNotOwnedByUserIdQuery;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
 import com.agrocontrol.backend.store.domain.services.ProductQueryService;
 import com.agrocontrol.backend.store.interfaces.rest.resources.*;
@@ -142,14 +143,14 @@ public class ProductsController {
         return ResponseEntity.ok(resources);
     }
 
-    @Operation(summary = "Get all products")
+    @Operation(summary = "Get all products not owned by user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Products found"),
             @ApiResponse(responseCode = "404", description = "Products not found"),
     })
-    @GetMapping
-    public ResponseEntity<List<ProductResource>> getAllProducts() {
-        List<Product> products = this.productQueryService.handle(new GetProductByUserIdQuery(null));
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<ProductResource>> getAllProducts(@PathVariable Long userId) {
+        List<Product> products = this.productQueryService.handle(new GetProductsNotOwnedByUserIdQuery(userId));
 
         if (products.isEmpty()) {
             return ResponseEntity.badRequest().build();

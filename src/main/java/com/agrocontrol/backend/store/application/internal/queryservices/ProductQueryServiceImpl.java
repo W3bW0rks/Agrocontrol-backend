@@ -27,8 +27,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     @Override
-    public List<Product> handle(GetAllProductsQuery query) {
-        return productRepository.findAll();
+    public List<Product> handle(GetProductsNotOwnedByUserIdQuery query) {
+        return productRepository.findByUserIdIsNot(query.userId());
     }
 
     @Override

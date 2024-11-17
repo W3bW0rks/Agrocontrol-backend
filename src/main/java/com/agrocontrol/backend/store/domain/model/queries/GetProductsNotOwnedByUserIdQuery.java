@@ -1,4 +1,4 @@
 package com.agrocontrol.backend.store.domain.model.queries;
 
-public record GetAllProductsQuery() {
+public record GetProductsNotOwnedByUserIdQuery(Long userId) {
 }

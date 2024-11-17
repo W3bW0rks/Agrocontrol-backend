@@ -14,5 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByUserId(Long userId);
 
+    List<Product> findByUserIdIsNot(Long userId);
+
     Optional<Product> findByPreviousIdAndUserId(Long previousId, Long userId);
 }
