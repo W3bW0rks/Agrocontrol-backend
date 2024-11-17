@@ -2,7 +2,6 @@ package com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositorie
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

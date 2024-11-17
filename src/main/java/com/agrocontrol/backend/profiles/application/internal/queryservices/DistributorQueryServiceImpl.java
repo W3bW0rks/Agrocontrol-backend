@@ -1,6 +1,5 @@
 package com.agrocontrol.backend.profiles.application.internal.queryservices;
 
-import com.agrocontrol.backend.profiles.application.internal.outboundservices.acl.ExternalUserService;
 import com.agrocontrol.backend.profiles.domain.model.aggregates.Distributor;
 import com.agrocontrol.backend.profiles.domain.model.queries.GetDistributorByUserIdAsyncQuery;
 import com.agrocontrol.backend.profiles.domain.services.DistributorQueryService;

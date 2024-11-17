@@ -3,8 +3,6 @@ package com.agrocontrol.backend.iam.infrastructure.authorization.sfs.services;
 
 import com.agrocontrol.backend.iam.infrastructure.authorization.sfs.model.UserDetailsImpl;
 import com.agrocontrol.backend.iam.infrastructure.persistence.jpa.repositories.UserRepository;
-
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

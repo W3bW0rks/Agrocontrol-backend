@@ -2,7 +2,6 @@ package com.agrocontrol.backend.payment.interfaces.rest;
 
 
 import com.agrocontrol.backend.payment.domain.model.aggregates.Payment;
-import com.agrocontrol.backend.payment.domain.model.queries.GetPaymentByIdQuery;
 import com.agrocontrol.backend.payment.domain.model.queries.GetPaymentBySubscriptionIdQuery;
 import com.agrocontrol.backend.payment.domain.model.valueobjects.SubscriptionId;
 import com.agrocontrol.backend.payment.domain.services.PaymentCommandService;
@@ -13,7 +12,6 @@ import com.agrocontrol.backend.payment.interfaces.rest.transform.CreatePaymentCo
 import com.agrocontrol.backend.payment.interfaces.rest.transform.PaymentResourceFromEntityAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;

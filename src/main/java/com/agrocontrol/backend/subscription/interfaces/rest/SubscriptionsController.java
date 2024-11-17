@@ -1,19 +1,15 @@
 package com.agrocontrol.backend.subscription.interfaces.rest;
 
 import com.agrocontrol.backend.subscription.domain.model.aggregates.Subscription;
-import com.agrocontrol.backend.subscription.domain.model.queries.GetSubscriptionByIdQuery;
 import com.agrocontrol.backend.subscription.domain.model.queries.GetSubscriptionByUserIdQuery;
 import com.agrocontrol.backend.subscription.domain.model.valueobjects.UserId;
 import com.agrocontrol.backend.subscription.domain.services.SubscriptionCommandService;
 import com.agrocontrol.backend.subscription.domain.services.SubscriptionQueryService;
 import com.agrocontrol.backend.subscription.interfaces.rest.resources.CreateSubscriptionResource;
 import com.agrocontrol.backend.subscription.interfaces.rest.resources.SubscriptionResource;
-import com.agrocontrol.backend.subscription.interfaces.rest.resources.RenewSubscriptionResource;
 import com.agrocontrol.backend.subscription.interfaces.rest.resources.UpdatePlantTypeResource;
 import com.agrocontrol.backend.subscription.interfaces.rest.transform.CreateSubscriptionCommandFromResourceAssembler;
 import com.agrocontrol.backend.subscription.interfaces.rest.transform.SubscriptionResourceFromEntityAssembler;
-import com.agrocontrol.backend.subscription.interfaces.rest.transform.RenewSubscriptionCommandFromResourceAssembler;
-import com.agrocontrol.backend.subscription.interfaces.rest.transform.UpdatePlanTypeCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

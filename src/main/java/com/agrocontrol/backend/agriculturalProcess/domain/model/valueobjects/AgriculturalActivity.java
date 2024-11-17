@@ -1,7 +1,6 @@
 package com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects;
 
 import com.agrocontrol.backend.agriculturalProcess.domain.model.aggregates.AgriculturalProcess;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddResourceToActivityCommand;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

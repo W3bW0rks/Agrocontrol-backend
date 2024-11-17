@@ -1,9 +1,6 @@
 package com.agrocontrol.backend.fields.interfaces.rest;
 
 import com.agrocontrol.backend.fields.domain.model.aggregates.Worker;
-import com.agrocontrol.backend.fields.domain.model.commands.CreateWorkerCommand;
-import com.agrocontrol.backend.fields.domain.model.commands.DeleteFieldCommand;
-import com.agrocontrol.backend.fields.domain.model.commands.DeleteWorkerCommand;
 import com.agrocontrol.backend.fields.domain.model.queries.GetAllWorkersByProducerId;
 import com.agrocontrol.backend.fields.domain.services.WorkerCommandService;
 import com.agrocontrol.backend.fields.domain.services.WorkerQueryService;

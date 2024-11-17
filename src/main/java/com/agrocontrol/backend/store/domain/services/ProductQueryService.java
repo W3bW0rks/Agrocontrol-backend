@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ProductQueryService {
     List<Product> handle(GetProductByUserIdQuery query);
+    List<Product> handle(GetAllProductsQuery query);
     Optional<Product> handle(GetProductByIdQuery query);
     Optional<Product> handle(GetProductByNameQuery query);
     boolean handle(CheckProductByIdQuery query);

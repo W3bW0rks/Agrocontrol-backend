@@ -4,7 +4,6 @@ import com.agrocontrol.backend.fields.domain.model.aggregates.Field;
 import com.agrocontrol.backend.fields.domain.model.queries.GetFieldByIdQuery;
 import com.agrocontrol.backend.fields.domain.model.queries.GetFieldsByProducerIdQuery;
 
-
 import java.util.List;
 import java.util.Optional;
 

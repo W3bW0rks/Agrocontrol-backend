@@ -1,14 +1,11 @@
 package com.agrocontrol.backend.store.application.acl;
 
 import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
-import com.agrocontrol.backend.store.domain.model.queries.GetNameByIdQuery;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
 import com.agrocontrol.backend.store.domain.services.ProductQueryService;
 import com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositories.ProductRepository;
 import com.agrocontrol.backend.store.interfaces.acl.ProductsContextFacade;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ProductsContextFacadeImpl implements ProductsContextFacade {

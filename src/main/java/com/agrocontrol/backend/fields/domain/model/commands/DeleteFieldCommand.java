@@ -1,7 +1,6 @@
 package com.agrocontrol.backend.fields.domain.model.commands;
 
 import com.agrocontrol.backend.fields.domain.exceptions.FieldIdNotValidException;
-import com.agrocontrol.backend.fields.domain.model.valueobjects.ProducerId;
 
 public record DeleteFieldCommand(
         Long fieldId,

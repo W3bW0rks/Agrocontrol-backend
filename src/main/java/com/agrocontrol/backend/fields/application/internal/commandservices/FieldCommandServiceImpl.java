@@ -1,7 +1,6 @@
 package com.agrocontrol.backend.fields.application.internal.commandservices;
 
 import com.agrocontrol.backend.fields.domain.exceptions.FieldNotFoundException;
-import com.agrocontrol.backend.fields.domain.exceptions.FieldSizeNotValidException;
 import com.agrocontrol.backend.fields.domain.model.aggregates.Field;
 import com.agrocontrol.backend.fields.domain.model.commands.CreateFieldCommand;
 import com.agrocontrol.backend.fields.domain.model.commands.DeleteFieldCommand;

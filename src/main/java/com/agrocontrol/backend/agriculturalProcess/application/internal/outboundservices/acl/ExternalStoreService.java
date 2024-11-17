@@ -3,8 +3,6 @@ package com.agrocontrol.backend.agriculturalProcess.application.internal.outboun
 import com.agrocontrol.backend.store.interfaces.acl.ProductsContextFacade;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service("externalStoreService")
 public class ExternalStoreService {
     private final ProductsContextFacade productsContextFacade;

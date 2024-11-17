@@ -1,10 +1,7 @@
 package com.agrocontrol.backend.store.interfaces.rest;
 
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
-import com.agrocontrol.backend.store.domain.model.queries.GetProductByIdQuery;
-import com.agrocontrol.backend.store.domain.model.queries.GetProductByNameQuery;
 import com.agrocontrol.backend.store.domain.model.queries.GetProductByUserIdQuery;
-import com.agrocontrol.backend.store.domain.model.valueobjects.UserId;
 import com.agrocontrol.backend.store.domain.services.ProductCommandService;
 import com.agrocontrol.backend.store.domain.services.ProductQueryService;
 import com.agrocontrol.backend.store.interfaces.rest.resources.*;
@@ -133,6 +130,26 @@ public class ProductsController {
         var query = new GetProductByUserIdQuery(userId);
 
         List<Product> products = this.productQueryService.handle(query);
+
+        if (products.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        List<ProductResource> resources = products.stream()
+                .map(ProductResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+
+        return ResponseEntity.ok(resources);
+    }
+
+    @Operation(summary = "Get all products")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Products found"),
+            @ApiResponse(responseCode = "404", description = "Products not found"),
+    })
+    @GetMapping
+    public ResponseEntity<List<ProductResource>> getAllProducts() {
+        List<Product> products = this.productQueryService.handle(new GetProductByUserIdQuery(null));
 
         if (products.isEmpty()) {
             return ResponseEntity.badRequest().build();

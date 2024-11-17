@@ -1,7 +1,7 @@
 package com.agrocontrol.backend.store.domain.model.aggregates;
 
-import com.agrocontrol.backend.store.domain.model.commands.CreatePaymentProductCommand;
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import com.agrocontrol.backend.store.domain.model.commands.CreatePaymentProductCommand;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

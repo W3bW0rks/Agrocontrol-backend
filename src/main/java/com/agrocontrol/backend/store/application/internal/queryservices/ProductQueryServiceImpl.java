@@ -27,6 +27,11 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     @Override
+    public List<Product> handle(GetAllProductsQuery query) {
+        return productRepository.findAll();
+    }
+
+    @Override
     public Optional<Product> handle(GetProductByIdQuery query) {
         return productRepository.findById(query.productId());
     }

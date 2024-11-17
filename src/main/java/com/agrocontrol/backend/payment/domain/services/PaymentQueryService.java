@@ -1,7 +1,8 @@
 package com.agrocontrol.backend.payment.domain.services;
 
 import com.agrocontrol.backend.payment.domain.model.aggregates.Payment;
-import com.agrocontrol.backend.payment.domain.model.queries.*;
+import com.agrocontrol.backend.payment.domain.model.queries.GetPaymentByIdQuery;
+import com.agrocontrol.backend.payment.domain.model.queries.GetPaymentBySubscriptionIdQuery;
 
 import java.util.Optional;
 

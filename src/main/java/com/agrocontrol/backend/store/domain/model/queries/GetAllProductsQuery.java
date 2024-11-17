@@ -1,4 +1,4 @@
 package com.agrocontrol.backend.store.domain.model.queries;
 
-public record GetProductByUserIdQuery(Long userId) {
+public record GetAllProductsQuery() {
 }

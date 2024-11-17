@@ -5,7 +5,9 @@ import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddCrop
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddHarvestToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddIrrigationToProcessCommand;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.commands.AddSeedingToProcessCommand;
-import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.*;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetActivitiesByActivityTypeAndAgriculturalProcessIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetLastActivityByActivityTypeAndAgriculturalProcessIdQuery;
+import com.agrocontrol.backend.agriculturalProcess.domain.model.queries.GetUnfinishedAgriculturalProcessByFieldIdQuery;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.ActivityType;
 import com.agrocontrol.backend.agriculturalProcess.domain.model.valueobjects.AgriculturalActivity;
 import com.agrocontrol.backend.agriculturalProcess.domain.services.AgriculturalProcessCommandService;

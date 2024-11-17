@@ -2,7 +2,6 @@ package com.agrocontrol.backend.fields.interfaces.rest;
 
 import com.agrocontrol.backend.fields.domain.model.aggregates.Field;
 import com.agrocontrol.backend.fields.domain.model.commands.DeleteFieldCommand;
-import com.agrocontrol.backend.fields.domain.model.queries.GetFieldByIdQuery;
 import com.agrocontrol.backend.fields.domain.model.queries.GetFieldsByProducerIdQuery;
 import com.agrocontrol.backend.fields.domain.services.FieldCommandService;
 import com.agrocontrol.backend.fields.domain.services.FieldQueryService;
@@ -19,9 +18,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -2,8 +2,6 @@ package com.agrocontrol.backend.iam.infrastructure.authorization.sfs.pipeline;
 
 import com.agrocontrol.backend.iam.infrastructure.authorization.sfs.model.UsernamePasswordAuthenticationTokenBuilder;
 import com.agrocontrol.backend.iam.infrastructure.tokens.jwt.BearerTokenService;
-
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

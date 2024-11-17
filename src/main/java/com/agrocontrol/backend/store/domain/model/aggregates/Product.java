@@ -1,7 +1,10 @@
 package com.agrocontrol.backend.store.domain.model.aggregates;
 
 import com.agrocontrol.backend.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import com.agrocontrol.backend.store.domain.model.commands.*;
+import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
+import com.agrocontrol.backend.store.domain.model.commands.CreateProductCommand;
+import com.agrocontrol.backend.store.domain.model.commands.UpdateProductCommand;
+import com.agrocontrol.backend.store.domain.model.commands.UpdateProductOwnerCommand;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

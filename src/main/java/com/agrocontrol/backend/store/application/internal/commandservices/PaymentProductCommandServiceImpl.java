@@ -3,7 +3,6 @@ package com.agrocontrol.backend.store.application.internal.commandservices;
 import com.agrocontrol.backend.payment.application.internal.outboundservices.ExternalProfileContextFacade;
 import com.agrocontrol.backend.store.domain.model.aggregates.PaymentProduct;
 import com.agrocontrol.backend.store.domain.model.aggregates.Product;
-import com.agrocontrol.backend.store.domain.model.commands.ChangeQuantityOfProductCommand;
 import com.agrocontrol.backend.store.domain.model.commands.CreatePaymentProductCommand;
 import com.agrocontrol.backend.store.domain.services.PaymentProductCommandService;
 import com.agrocontrol.backend.store.infrastructure.persistence.jpa.repositories.PaymentProductRepository;

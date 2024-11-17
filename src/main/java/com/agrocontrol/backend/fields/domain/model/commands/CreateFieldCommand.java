@@ -3,7 +3,6 @@ package com.agrocontrol.backend.fields.domain.model.commands;
 import com.agrocontrol.backend.fields.domain.exceptions.FieldLocationNotValidException;
 import com.agrocontrol.backend.fields.domain.exceptions.FieldNameNotValidException;
 import com.agrocontrol.backend.fields.domain.exceptions.FieldSizeNotValidException;
-import com.agrocontrol.backend.fields.domain.model.valueobjects.ProducerId;
 
 /**
  *  command to create a Field
