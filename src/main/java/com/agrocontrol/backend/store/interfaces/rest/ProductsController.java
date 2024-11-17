@@ -21,7 +21,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/v1/products", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "Products", description = "Operations related to products")
 public class ProductsController {
