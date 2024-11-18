@@ -49,6 +49,10 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         AgriculturalProcess agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Agricultural Process is already finished");
+        }
+
         agriculturalProcess.addActivity(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.ofNullable(updatedAgriculturalProcess.getLastActivityId());
@@ -59,6 +63,10 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         AgriculturalProcess agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Agricultural Process is already finished");
+        }
+
         agriculturalProcess.addActivity(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.ofNullable(updatedAgriculturalProcess.getLastActivityId());
@@ -68,6 +76,10 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
     public Optional<AgriculturalActivity> handle(AddHarvestToProcessCommand command) {
         var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
+
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Agricultural Process is already finished");
+        }
 
         agriculturalProcess.addActivity(command);
 
@@ -86,6 +98,10 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         AgriculturalProcess agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Agricultural Process is already finished");
+        }
+
         agriculturalProcess.finish();
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.of(updatedAgriculturalProcess);
@@ -96,6 +112,9 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
         var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
 
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Agricultural Process is already finished");
+        }
         agriculturalProcess.applyActivityAction(command);
         var updatedAgriculturalProcess = agriculturalProcessRepository.save(agriculturalProcess);
         return Optional.ofNullable(updatedAgriculturalProcess.getActivityById(command.activityId()));
@@ -105,6 +124,10 @@ public class AgriculturalProcessCommandServiceImpl implements AgriculturalProces
     public Optional<AgriculturalActivity> handle(AddResourceToActivityCommand command) {
         var agriculturalProcess = this.agriculturalProcessRepository.findById(command.agriculturalProcessId())
                 .orElseThrow(() -> new IllegalArgumentException("Agricultural Process not found"));
+
+        if (agriculturalProcess.isFinished()) {
+            throw new IllegalArgumentException("Agricultural Process is already finished");
+        }       
 
         String name = "";
         if (command.cost() > 0) {
